@@ -3,7 +3,6 @@ use std::fmt;
 use regex::Regex;
 
 use common::common::*;
-use std::slice::Windows;
 
 #[derive(Default, Clone, Debug)]
 struct Commit {
@@ -52,7 +51,7 @@ fn process(raw: String) {
     for commit in cleanvec.iter() {
         // split the date from the message
         let (date, msg) = commit.split_once(' ').unwrap();
-        let mut commit = Commit{ date: date.to_string(), msg: msg.to_string() };
+        let commit = Commit{ date: date.to_string(), msg: msg.to_string() };
         if date != curdate {
             if datevec.len() > 0 {
                 datevecs.push(datevec);
@@ -123,9 +122,6 @@ fn check_semvertag() {
         msg: "0.11.2".to_string()
     };
     assert_eq!(true, c.issemvertag());
-    // let re = Regex::new(r"^\d+\.\d+\.\d+$").unwrap();
-    // assert!(re.is_match("2.12.2"))
-
 }
 
 #[test]
@@ -139,6 +135,8 @@ fn check_consolidation() {
     2021-10-15 Issue #423: make the pickers a bit smaller.
     2021-10-15 Issue #423: semantics — singular of drivers is driver.
     2021-10-15 Issue curation.".to_string();
+
+    todo!("Finish this test");
 }
 
 #[test]
@@ -153,14 +151,4 @@ fn check_cleanraw() {
 
     assert_eq!(2, o.len());
     assert_eq!("this is alpha".to_string(), o.first().unwrap().to_string());
-}
-
-
-#[test]
-fn test_windows() {
-  let slice = ['r', 'u', 's', 't'];
-  let win = slice.windows(2);
-  for thing in win.into_iter() {
-      println!("{:?}", thing);
- }
 }
