@@ -133,23 +133,43 @@ fn x() {
     println!("{}", &("Date: 4 December 2021 at 13:32".to_string())[0..5]);
 }
 
-fn mj()  {
-    let mjfile= "/Users/steve/Dropbox/macjournal.sample.txt".to_string();
-    let rawdata = file_to_string(mjfile).trim().to_string();
-    processmj(rawdata);
+fn macjournal()  {
+    let macjournalfile= "/Users/steve/Dropbox/macjournal.sample.txt".to_string();
+    let rawdata = file_to_string(macjournalfile).trim().to_string();
+    processmacjournal(rawdata);
 }
 
-fn processmj(raw: String) {
+fn processmacjournal(raw: String) {
     let mut rawvec: Vec<String> = raw.lines().map(|l| l.trim().to_string()).collect();
     // remove the "Topic: ..." elements
     rawvec.retain(|x| &x.len() < &6 || &x[0..6] != "Topic:");
     let mut cleanvec: Vec<String> = cleanraw(rawvec);
+    // we need to normalize the listing
+    cleanvec = dateprefix(cleanvec);
     println!("{:?}", cleanvec);
+}
+
+fn dateprefix(unvec: Vec<String>) -> Vec<String> {
+    let mut retvec: Vec<String> =vec![];
+    let mut dt: String = String::from(" ");
+    for line in unvec {
+        if isyyyymmdddate(line.clone()) {
+            dt = line;
+            continue;
+        }
+        retvec.push(format!("{} {}", dt, line));
+    }
+    retvec
+}
+
+fn isyyyymmdddate(lin:String) -> bool {
+    let re = Regex::new(r"^\d{4}-\d{2}-\d{2}$").unwrap();
+    re.is_match(lin.as_str())
 }
 
 fn cleanrawdate(datestring: String) -> String {
     let strvec:Vec<_> =datestring.split_ascii_whitespace().collect();
-    let day = strvec[1];
+    let day = format!("{:0>2}", strvec[1]);
     let year = strvec[3];
     let monthstr = match strvec[2] {
         "January" => "01",
@@ -171,8 +191,8 @@ fn cleanrawdate(datestring: String) -> String {
 }
 
 #[test]
-fn check_mj() {
-    mj();
+fn check_macjournal() {
+    macjournal();
 }
 
 #[test]
