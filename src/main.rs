@@ -1,5 +1,6 @@
 mod common;
-use std::fmt;
+
+use std::{fmt, fs::read_to_string};
 use regex::Regex;
 
 use common::common::*;
@@ -98,14 +99,26 @@ fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
     let mut returnvec: Vec<String> = vec![];
     let mut i = 0;
     for l in rawvec {
-        let temp = l.trim().replace("  ", " ");
+        let mut temp = l.trim().replace("  ", " ");
+
         if temp.len() == 0 {
             continue;
         }
+
         // ignore "Ibid." lines
         if temp.to_ascii_lowercase().contains("ibid.") {
             continue;
         }
+
+        // a Macjournal export date?
+        if temp.len() > 5 && &temp[0..5] == "Date:" {
+            temp = cleanrawdate(temp);
+        }
+
+        // // a Macjournal export date?
+        // if temp.len() > 6 && &temp[0..6] == "Topic:" {
+        //     continue;
+        // }
 
         if temp.len() > 0 {
             returnvec.push(temp.to_string());
@@ -113,6 +126,59 @@ fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
         i = i + 1;
     }
     returnvec
+}
+
+#[test]
+fn x() {
+    println!("{}", &("Date: 4 December 2021 at 13:32".to_string())[0..5]);
+}
+
+fn mj()  {
+    let mjfile= "/Users/steve/Dropbox/macjournal.sample.txt".to_string();
+    let rawdata = file_to_string(mjfile).trim().to_string();
+    processmj(rawdata);
+}
+
+fn processmj(raw: String) {
+    let mut rawvec: Vec<String> = raw.lines().map(|l| l.trim().to_string()).collect();
+    // remove the "Topic: ..." elements
+    rawvec.retain(|x| &x.len() < &6 || &x[0..6] != "Topic:");
+    let mut cleanvec: Vec<String> = cleanraw(rawvec);
+    println!("{:?}", cleanvec);
+}
+
+fn cleanrawdate(datestring: String) -> String {
+    let strvec:Vec<_> =datestring.split_ascii_whitespace().collect();
+    let day = strvec[1];
+    let year = strvec[3];
+    let monthstr = match strvec[2] {
+        "January" => "01",
+        "February" => "02",
+        "March" => "03",
+        "April" => "04",
+        "May" => "05",
+        "June" => "06",
+        "July" => "07",
+        "August" => "08",
+        "September" => "09",
+        "October" => "10",
+        "November" => "11",
+        "December" => "12",
+        _ => "00"
+    };
+    let month = monthstr.to_string();
+    format!("{}-{}-{}", year, month, day).to_string()
+}
+
+#[test]
+fn check_mj() {
+    mj();
+}
+
+#[test]
+fn check_cleanrawdate() {
+    let teststring = "Date: 15 November 2021 at 12:15".to_string();
+    assert_eq!(cleanrawdate(teststring), "2021-11-15".to_string())
 }
 
 #[test]
