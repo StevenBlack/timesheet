@@ -1,12 +1,14 @@
-# 🕑 `git log` and MacJournal parser
+# 🕑 `git log` and MacJournal export parser
 
 A personal project, written in rust.
 
-This repo consolidates daily activity from two different sources and produces one consolidated line for each work day.
+This repo consolidates daily activity from two different sources and produces one consolidated line per day.
 
 ## Background
 
-When I track time on software projects, I use `git log` reports, and ad-hoc daily notes kept in (the most excellent) [MacJournal](https://danschimpf.com/). I merge these two sources to create one spreadsheet cell per day. This is a tedious manual process.
+When I track project time and tasks, I use `git log` reports, and ad-hoc daily notes kept in (the most excellent) [MacJournal](https://danschimpf.com/). I merge these two sources to create one spreadsheet cell per day. 
+
+This is a tedious manual process.
 
 <img width="378" alt="automate-all-the-things" src="https://user-images.githubusercontent.com/80144/145323062-b6fadc17-34ff-4369-baea-de9420f9f288.png">
 
