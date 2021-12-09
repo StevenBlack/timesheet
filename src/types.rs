@@ -1,12 +1,14 @@
 // types.rs
 use std::{fmt};
 use regex::Regex;
-use crate::Semver;
-
 #[derive(Default, Clone, Debug)]
 pub struct Commit {
     pub date:String,
     pub msg:String,
+}
+
+pub trait Semver {
+    fn issemvertag(&self) -> bool;
 }
 
 impl Semver for Commit {
@@ -43,6 +45,6 @@ fn check_not_semvertag() {
         date: "2021-10-15".to_string(),
         msg: "some text".to_string()
     };
-    assert_eq!(false, c.issemvertag());
+    assert_eq!(true, c.issemvertag());
 }
 
