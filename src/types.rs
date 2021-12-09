@@ -9,10 +9,6 @@ pub struct Commit {
     pub msg:String,
 }
 
-// pub trait Semver {
-//     fn issemvertag(&self) -> bool;
-// }
-
 impl Semver for Commit {
     // Matches digits only
     // 1 - Major
