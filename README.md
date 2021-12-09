@@ -30,7 +30,7 @@ git log --pretty="format:%cd %s" --since="60 days ago" --date="short" >> "gitout
 2021-12-01 Issue 405: refactor — reorganise this long query to make it easier to deconstruct.
 2021-12-01 After hours — update test/dev data.
 ```
-## Output fro MacJournal export
+## Output from MacJournal export
 
 ```
 Date: 1 December 2021 at 12:15
