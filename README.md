@@ -21,14 +21,14 @@ git log --pretty="format:%cd %s" --since="60 days ago" --date="short" >> "gitout
 ... which produces output like this:
 
 ```
-2021-12-01 Version 0.10.27 built, tested, and rolled out.
-2021-12-01 After hours — update test/dev data.
+2021-12-01 0.13.6
 2021-12-01 Issue #2971 and #2951: assessing the sorry-ass state of our data pipeline.
 2021-12-01 Issue #3341: check the weekend schedule, why is there is no Saturday schedule this week.
 2021-12-01 Issue #404: fix — promote the Job screen to the main menu, and rename it "Upcoming Jobs".
 2021-12-01 Issue curation.
 2021-12-01 Afternoon coordination meeting with QA.
 2021-12-01 Issue 405: refactor — reorganise this long query to make it easier to deconstruct.
+2021-12-01 After hours — update test/dev data.
 ```
 ## Output fro MacJournal export
 
@@ -39,7 +39,6 @@ Topic: Tasks today
 Morning call with the Dev team.
 Final testing of version 0.13.6.
 Release version 0.13.6 to userland.
-0.13.6
 Issue #3138: adjust a part production report, and regenerate it.
 Issue #3138: delete all the void entries from the production parts table.
 Issue #3140: new issue about making reworked parts easy to move and merge.
@@ -62,7 +61,7 @@ The following refinements should apply
 
 ### Git tags
 
-Git tags are embellished, like this: "`0.13.6`" becomee the sentence "`Version 0.13.6 built, texted, and rolled out.`"
+Git tags are embellished, like this: "`0.13.6`" become the sentence "`Version 0.13.6 built, texted, and rolled out.`"
 
 ### Repeated issue references
 
