@@ -47,11 +47,6 @@ pub fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
             continue;
         }
 
-        // ignore "Ibid." lines
-        if temp.to_ascii_lowercase().contains("ibid.") {
-            continue;
-        }
-
         // a Macjournal export date?
         if temp.len() > 5 && &temp[0..5] == "Date:" {
             temp = cleanrawdate(temp);
