@@ -1,6 +1,6 @@
 #[allow(dead_code)]
 
-// Utils to support AOC puzzles
+// Some common utils
 
 pub mod common {
     use std::io::BufReader;
