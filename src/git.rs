@@ -1,63 +1,17 @@
 use crate::common::common::{file_to_string};
-use crate::types::{Commit, Commits};
-use crate::Semver;
 
-pub fn process()  {
+pub fn process()  -> Vec<String> {
     // load raw data
-    let commitsfile= "/Users/steve/Dropbox/commits.sample.txt".to_string();
-    let raw = file_to_string(commitsfile).trim().to_string();
+    let file_path_and_name= "/Users/steve/Dropbox/commits.sample.txt".to_string();
+    let raw = file_to_string(file_path_and_name).trim().to_string();
 
-    let mut curdate: &str = "";
-    let mut datevec: Commits = vec![];
-    let mut datevecs: Vec<Commits> = vec![];
+    // vec of all commit Strings, one element per lime
     let rawvec: Vec<String> = raw.lines().map(|l| l.trim().to_string()).collect();
 
-    let cleanvec: Vec<String> = cleanraw(rawvec);
-
-    // load our datevecs
-    for commit in cleanvec.iter() {
-        // split the date from the message
-        let (date, msg) = commit.split_once(' ').unwrap();
-        let commit = Commit{ date: date.to_string(), msg: msg.to_string() };
-        if date != curdate {
-            if datevec.len() > 0 {
-                datevecs.push(datevec);
-            }
-            curdate = date;
-            datevec = vec![commit];
-        } else {
-            datevec.push(commit);
-        }
-    }
-
-    // now output:
-    for day in datevecs.iter() {
-        let mut out = day[0].date.to_owned();
-        let xday = semvercommits(day.clone());
-        for commit in xday {
-            out.push_str(" ");
-            out.push_str(commit.msg.as_str());
-        }
-        println!("{}", out);
-    }
-}
-
-fn semvercommits(commits: Commits) -> Commits {
-    let (semver, mut other):(Vec<Commit>, Vec<Commit>) = commits
-        .into_iter()
-        .partition(|x|(x.issemvertag()));
-
-    if semver.len() == 0 {
-        return other;
-    }
-    let mut msgs: Vec<String> = vec![];
-    let date = &semver[0].date;
-    for c in &semver {
-        msgs.push(c.msg.clone());
-    }
-    let semv: Commit = Commit { date: date.to_string(), msg: format!("Versions {} built, tested, and rolled out.", msgs.join(", ")) };
-    other.push(semv);
-    return other;
+    // vec of clean commits, one commit per element
+    let mut cleanvec: Vec<String> = cleanraw(rawvec);
+    cleanvec.sort();
+    cleanvec
 }
 
 fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
