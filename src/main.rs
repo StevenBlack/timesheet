@@ -2,19 +2,30 @@ mod common;
 mod git;
 mod macjournal;
 mod types;
-mod traits;
+use structopt::StructOpt;
 
-use git::process as gitprocess;
-use macjournal::process as mjprocess;
+use crate::types::{Commit, Commits, Semver};
+// use crate::Semver;
+
+use git::process as fromgit;
+use macjournal::process as frommacjournal;
 
 
-pub trait Semver {
-    fn issemvertag(&self) -> bool;
+#[derive(Debug, StructOpt)]
+#[structopt(name = "timesheet", about = "Timesheet input parser.")]
+struct Opt {
+  // options and flags will go here
 }
 
 fn main()  {
-    gitprocess();
-    mjprocess();
+
+    let opt = Opt::from_args();
+    println!("{:?}", opt);
+
+    let mut cleanvec: Vec<String> = vec![];
+    cleanvec.extend(fromgit());
+    cleanvec.extend(frommacjournal());
+
     // the date being processed
     let mut curdate: &str = "";
 
@@ -68,4 +79,5 @@ fn semvercommits(commits: Commits) -> Commits {
     }
     let semv: Commit = Commit { date: date.to_string(), msg: format!("Versions {} built, tested, and rolled out.", msgs.join(", ")) };
     other.push(semv);
+    return other;
 }
