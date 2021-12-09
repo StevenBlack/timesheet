@@ -8,7 +8,7 @@ This repo consolidates daily activity from two different sources and produces on
 
 ## Background
 
-When I track project time and tasks, I use `git log` reports, and ad-hoc daily notes kept in (the most excellent) [MacJournal](https://danschimpf.com/). I merge these two sources to create one spreadsheet cell per day. 
+When I track project time and tasks, I use `git log` reports, and ad-hoc daily notes kept in (the most excellent) [MacJournal](https://danschimpf.com/). I merge these two sources to create one spreadsheet cell per day.
 
 This is a tedious manual process.
 
@@ -46,7 +46,7 @@ Issue #3138: adjust a part production report, and regenerate it.
 Issue #3138: delete all the void entries from the production parts table.
 Issue #3140: new issue about making reworked parts easy to move and merge.
 Issue #3141: sales dept reports parts are missing in new estimates, so investigating that.
-After hours — update test/dev data. 
+After hours — update test/dev data.
 ```
 ## What I need
 
@@ -62,7 +62,7 @@ The following refinements (should) apply:
 
 ### Git tags (status: 🟢)
 
-Raw git tags look like this: "`0.13.6`". 
+Lines with raw git tags look like this: "`0.13.6`".
 
 They should become the sentence "`Version 0.13.6 built, texted, and rolled out.`"
 
@@ -75,11 +75,26 @@ Issue #3138: fix — thing two.
 Issue #3138: fix — thing three.
 ```
 
-... becomes (note the semicolon `;` delimiter and the period `.` at the end.)
+... become (note the semicolon `;` delimiter and the period `.` at the end.)
 
 ```
 Issue #3138: fix — thing one; fix — thing two; fix — thing three.
 ```
+
+### Repeated version references (status: 🔴)
+
+Handwritten version number commits lke ...
+```
+2021-12-01 Something version 0.3.11
+2021-12-01 Something version 0.3.12
+2021-12-01 Something version 0.3.13
+```
+... become (note the semicolon `,` except with `and` as the last delimiter, and the period `.` at the end.)
+
+```
+Issue #3138: Something version 0.3.11, 0.3.12, and 0.3.13 built, tested, and rolled out.
+```
+
 ### Remove trivial commits (status: 🟢)
 
 Commits that say trivial things like "`Fix whitespace`" or just "`Whitespace`", or "`Fix typo`" or just "`Typo`", or the latin "[`Ibid.`](https://en.wikipedia.org/wiki/Ibid.)", are dropped.
