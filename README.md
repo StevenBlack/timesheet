@@ -12,7 +12,6 @@ This is a tedious manual process.
 
 <img width="378" alt="automate-all-the-things" src="https://user-images.githubusercontent.com/80144/145323062-b6fadc17-34ff-4369-baea-de9420f9f288.png">
 
-
 ### Raw output from `git log`
 
 The `git` command looks like this...
@@ -79,7 +78,6 @@ Issue #3138: fix — thing three.
 ```
 Issue #3138: fix — thing one; fix — thing two; fix — thing three.
 ```
-
-### Remove trivial commits.
+### Remove trivial commits
 
 Commits that say trivial things like "`Fix whitespace`" or just "`Whitespace`", or "`Fix typo`" or just "`Typo`", or the latin "`Ibid.`", are dropped.
