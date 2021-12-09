@@ -82,4 +82,4 @@ Issue #3138: fix — thing one; fix — thing two; fix — thing three.
 ```
 ### Remove trivial commits (status: 🟢)
 
-Commits that say trivial things like "`Fix whitespace`" or just "`Whitespace`", or "`Fix typo`" or just "`Typo`", or the latin "`Ibid.`", are dropped.
+Commits that say trivial things like "`Fix whitespace`" or just "`Whitespace`", or "`Fix typo`" or just "`Typo`", or the latin "[`Ibid.`](https://en.wikipedia.org/wiki/Ibid.)", are dropped.
