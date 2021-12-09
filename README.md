@@ -66,6 +66,10 @@ Lines with raw git tags look like this: "`0.13.6`".
 
 They should become the sentence "`Version 0.13.6 built, texted, and rolled out.`"
 
+### Remove trivial commits (status: 🟢)
+
+Commits that say trivial things like "`Fix whitespace`" or just "`Whitespace`", or "`Fix typo`" or just "`Typo`", or the latin "[`Ibid.`](https://en.wikipedia.org/wiki/Ibid.)", are dropped.
+
 ### Repeated issue references (status: 🔴)
 
 Repeated commits referring to the same issue, originally this....
@@ -94,7 +98,3 @@ Handwritten version number commits lke ...
 ```
 Issue #3138: Something version 0.3.11, 0.3.12, and 0.3.13 built, tested, and rolled out.
 ```
-
-### Remove trivial commits (status: 🟢)
-
-Commits that say trivial things like "`Fix whitespace`" or just "`Whitespace`", or "`Fix typo`" or just "`Typo`", or the latin "[`Ibid.`](https://en.wikipedia.org/wiki/Ibid.)", are dropped.
