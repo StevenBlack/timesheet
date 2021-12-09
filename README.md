@@ -51,7 +51,7 @@ After hours — update test/dev data.
 All the above input consolidated on one line per day that looks like this:
 
 ```
-2021-12-01 Version 0.10.27 built, tested, and rolled out. After hours ... etx...
+2021-12-01 Version 0.10.27 built, tested, and rolled out. After hours ... etc...
 ```
 
 ## Details
