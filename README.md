@@ -2,6 +2,8 @@
 
 A personal project, written in rust.
 
+**WORK IN PROGRESS; NOT READY**
+
 This repo consolidates daily activity from two different sources and produces one consolidated line per day.
 
 ## Background
