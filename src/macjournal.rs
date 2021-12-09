@@ -1,16 +1,22 @@
 use crate::common::common::{file_to_string};
 use regex::Regex;
 
-pub fn process()  {
-    let macjournalfile= "/Users/steve/Dropbox/macjournal.sample.txt".to_string();
-    let raw = file_to_string(macjournalfile).trim().to_string();
+pub fn process() -> Vec<String> {
+    // load raw data
+    let file_path_and_name= "/Users/steve/Dropbox/macjournal.sample.txt".to_string();
+    let raw = file_to_string(file_path_and_name).trim().to_string();
+
+    // vec of all notes, one element per line.
     let mut rawvec: Vec<String> = raw.lines().map(|l| l.trim().to_string()).collect();
+
     // remove the "Topic: ..." elements
     rawvec.retain(|x| &x.len() < &6 || &x[0..6] != "Topic:");
+
     let mut cleanvec: Vec<String> = cleanraw(rawvec);
     // we need to normalize the listing
     cleanvec = dateprefix(cleanvec);
-    println!("{:?}", cleanvec);
+    cleanvec.sort();
+    cleanvec
 }
 
 fn dateprefix(unvec: Vec<String>) -> Vec<String> {
@@ -65,7 +71,6 @@ fn check_cleanraw() {
     let mut t: Vec<String> = vec![];
     t.push(" this is alpha ".to_string());
     t.push("".to_string());
-    t.push("Ibid.".to_string());
     t.push("".to_string());
     t.push(" this is beta".to_string());
     let o = cleanraw(t);
