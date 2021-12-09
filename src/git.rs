@@ -1,8 +1,6 @@
-
 use crate::common::common::{file_to_string};
 use crate::types::{Commit, Commits};
 use crate::Semver;
-
 
 pub fn process()  {
     // load raw data
@@ -73,12 +71,22 @@ fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
             continue;
         }
 
-        // ignore "Ibid." lines
+        // ignore commits containing "Ibid."
         if temp.to_ascii_lowercase().contains("ibid.") {
             continue;
         }
 
-        // a Macjournal export date?
+        // ignore commits containing "whitespace"
+        if temp.to_ascii_lowercase().replace(" ", "").contains("whitespace") {
+            continue;
+        }
+
+        // ignore commits containing "typo"
+        if temp.to_ascii_lowercase().contains("typo") {
+            continue;
+        }
+
+        // Does this line contain a MacJournal export date?
         if temp.len() > 5 && &temp[0..5] == "Date:" {
             temp = cleanrawdate(temp);
         }
@@ -117,6 +125,9 @@ fn cleanrawdate(datestring: String) -> String {
 #[test]
 fn check_cleanraw() {
     let mut t: Vec<String> = vec![];
+    t.push("Fix typo".to_string());
+    t.push("Fix whitespace".to_string());
+    t.push("Remove white space".to_string());
     t.push(" this is alpha ".to_string());
     t.push("".to_string());
     t.push("Ibid.".to_string());
