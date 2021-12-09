@@ -11,7 +11,7 @@ When I track time on software projects, I use `git log` reports, and ad-hoc dail
 <img width="378" alt="automate-all-the-things" src="https://user-images.githubusercontent.com/80144/145323062-b6fadc17-34ff-4369-baea-de9420f9f288.png">
 
 
-### Output from `git log`
+### Raw output from `git log`
 
 The `git` command looks like this...
 
@@ -30,7 +30,7 @@ git log --pretty="format:%cd %s" --since="60 days ago" --date="short" >> "gitout
 2021-12-01 Issue 405: refactor — reorganise this long query to make it easier to deconstruct.
 2021-12-01 After hours — update test/dev data.
 ```
-## Output from MacJournal export
+## Raw output from MacJournal export
 
 ```
 Date: 1 December 2021 at 12:15
@@ -45,27 +45,27 @@ Issue #3140: new issue about making reworked parts easy to move and merge.
 Issue #3141: sales dept reports parts are missing in new estimates, so investigating that.
 After hours — update test/dev data. 
 ```
-
 ## What I need
 
-All the above input on one line per day that looks like this:
+All the above input consolidated on one line per day that looks like this:
 
 ```
 2021-12-01 Version 0.10.27 built, tested, and rolled out. After hours ... etx...
 ```
-One consolidated line, per day.
 
-## Refinements
+## Details
 
-The following refinements should apply
+The following refinements apply:
 
 ### Git tags
 
-Git tags are embellished, like this: "`0.13.6`" become the sentence "`Version 0.13.6 built, texted, and rolled out.`"
+Raw git tags look like this: "`0.13.6`". 
+
+They should become the sentence "`Version 0.13.6 built, texted, and rolled out.`"
 
 ### Repeated issue references
 
-This....
+Repeated commits referring to the same issue, originally this....
 ```
 Issue #3138: fix — thing one.
 Issue #3138: fix — thing two.
@@ -77,3 +77,7 @@ Issue #3138: fix — thing three.
 ```
 Issue #3138: fix — thing one; fix — thing two; fix — thing three.
 ```
+
+### Remove trivial commits.
+
+Commits that say trivial things like "`Fix whitespace`" or just "`Whitespace`", or "`Fix typo`" or just "`Typo`", or the latin "`Ibid.`", are dropped.
