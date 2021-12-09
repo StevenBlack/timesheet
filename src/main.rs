@@ -1,3 +1,5 @@
+use std::env;
+use std::path::{Path, PathBuf};
 mod common;
 mod git;
 mod macjournal;
@@ -10,14 +12,23 @@ use crate::types::{Commit, Commits, Semver};
 use git::process as fromgit;
 use macjournal::process as frommacjournal;
 
-
+// configuration
+const CONFIG_FILENAME: &str = ".timesheet";
 #[derive(Debug, StructOpt)]
 #[structopt(name = "timesheet", about = "Timesheet input parser.")]
 struct Opt {
   // options and flags will go here
 }
 
+
 fn main()  {
+
+    // locate the config file, if any, here or recursively in parent folders
+    let path = env::current_dir().unwrap();
+    match find_config_file(&path) {
+        Some(filepath) => println!(".timesheet file is found: {:?}", filepath),
+        None => println!("No .timesheet file was found."),
+    };
 
     let opt = Opt::from_args();
     println!("{:?}", opt);
@@ -80,4 +91,21 @@ fn semvercommits(commits: Commits) -> Commits {
     let semv: Commit = Commit { date: date.to_string(), msg: format!("Versions {} built, tested, and rolled out.", msgs.join(", ")) };
     other.push(semv);
     return other;
+}
+
+fn find_config_file(starting_directory: &Path) -> Option<PathBuf> {
+    let mut path: PathBuf = starting_directory.into();
+    let file = Path::new(CONFIG_FILENAME);
+
+    loop {
+        path.push(file);
+
+        if path.is_file() {
+            break Some(path);
+        }
+
+        if !(path.pop() && path.pop()) { // remove file && remove parent
+            break None;
+        }
+    }
 }
