@@ -58,15 +58,15 @@ All the above input consolidated on one line per day that looks like this:
 
 ## Details
 
-The following refinements apply:
+The following refinements (should) apply:
 
-### Git tags
+### Git tags (status: 🟢)
 
 Raw git tags look like this: "`0.13.6`". 
 
 They should become the sentence "`Version 0.13.6 built, texted, and rolled out.`"
 
-### Repeated issue references
+### Repeated issue references (status: 🔴)
 
 Repeated commits referring to the same issue, originally this....
 ```
@@ -80,6 +80,6 @@ Issue #3138: fix — thing three.
 ```
 Issue #3138: fix — thing one; fix — thing two; fix — thing three.
 ```
-### Remove trivial commits
+### Remove trivial commits (status: 🟢)
 
 Commits that say trivial things like "`Fix whitespace`" or just "`Whitespace`", or "`Fix typo`" or just "`Typo`", or the latin "`Ibid.`", are dropped.
