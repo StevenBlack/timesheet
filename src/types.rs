@@ -36,3 +36,13 @@ fn check_semvertag() {
     };
     assert_eq!(true, c.issemvertag());
 }
+
+#[test]
+fn check_not_semvertag() {
+    let c = Commit {
+        date: "2021-10-15".to_string(),
+        msg: "some text".to_string()
+    };
+    assert_eq!(false, c.issemvertag());
+}
+
