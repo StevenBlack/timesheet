@@ -17,7 +17,17 @@ const CONFIG_FILENAME: &str = ".timesheet";
 #[derive(Debug, StructOpt)]
 #[structopt(name = "timesheet", about = "Timesheet input parser.")]
 struct Opt {
-  // options and flags will go here
+    // The git log file
+    #[structopt(short, parse(from_os_str), default_value = "/Users/steve/Dropbox/commits.sample.txt")]
+    gitlogfile: PathBuf,
+
+    // The MacJournal input file
+    #[structopt(short, parse(from_os_str), default_value = "/Users/steve/Dropbox/macjournal.sample.txt")]
+    macjournalfile: PathBuf,
+
+    // The output file
+    #[structopt(short, parse(from_os_str))]
+    outfile: Option<PathBuf>,
 }
 
 
@@ -30,7 +40,7 @@ fn main()  {
         None => println!("No .timesheet file was found."),
     };
 
-    let opt = Opt::from_args();
+    let mut opt = Opt::from_args();
     println!("{:?}", opt);
 
     let mut cleanvec: Vec<String> = vec![];
@@ -73,7 +83,6 @@ fn main()  {
         println!("{}", out);
     }
 }
-
 
 fn semvercommits(commits: Commits) -> Commits {
     let (semver, mut other):(Vec<Commit>, Vec<Commit>) = commits
