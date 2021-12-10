@@ -1,4 +1,4 @@
-use crate::common::common::{file_to_string};
+use crate::utils::common::{file_to_string};
 
 pub fn process()  -> Vec<String> {
     // load raw data

@@ -1,6 +1,6 @@
+// Steven Black's rust utils
+// This module contains helpful utilities I've collected along the way.
 #[allow(dead_code)]
-
-// Some common utils
 
 pub mod common {
     use std::io::BufReader;

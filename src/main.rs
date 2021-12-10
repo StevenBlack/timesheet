@@ -1,6 +1,6 @@
 use std::env;
 use std::path::{Path, PathBuf};
-mod common;
+mod utils;
 mod git;
 mod macjournal;
 mod types;
