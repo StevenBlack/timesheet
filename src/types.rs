@@ -45,6 +45,6 @@ fn check_not_semvertag() {
         date: "2021-10-15".to_string(),
         msg: "some text".to_string()
     };
-    assert_eq!(true, c.issemvertag());
+    assert_eq!(false, c.issemvertag());
 }
 
