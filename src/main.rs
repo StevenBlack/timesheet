@@ -3,8 +3,11 @@ use std::path::{Path, PathBuf};
 mod utils;
 mod git;
 mod macjournal;
+use crate::utils::common::file_to_string;
 mod types;
+use serde_derive::Deserialize;
 use structopt::StructOpt;
+use structopt_toml::StructOptToml;
 
 use crate::types::{Commit, Commits, Semver};
 // use crate::Semver;
@@ -14,8 +17,9 @@ use macjournal::process as frommacjournal;
 
 // configuration file
 const CONFIG_FILENAME: &str = ".timesheet";
-#[derive(Debug, StructOpt)]
+#[derive(Debug, Deserialize, StructOpt, StructOptToml)]
 #[structopt(name = "timesheet", about = "Timesheet input parser.")]
+#[serde(default)]
 pub struct Opt {
     // Is this a dry run?
     #[structopt(short, long)]
@@ -38,19 +42,37 @@ pub struct Opt {
 }
 
 fn main()  {
-    let settings = Opt::from_args();
+
+    // locate the config file, if any, here or recursively in parent folders
+    let mut config_file: Option<PathBuf> = None;
+    let path = env::current_dir().unwrap();
+    match find_config_file(&path) {
+        Some(filepath) => {
+            config_file = Some(filepath);
+            // println!(".timesheet file is found: {:?}", filepath);
+        },
+        _ => {
+            // println!("No .timesheet file was found.");
+        },
+    };
+
+    let mut fname: String = "".to_string();
+    let settings: Opt;
+    if config_file.is_some() {
+        fname = config_file.unwrap().to_str().unwrap_or("").to_string();
+        let toml_str = file_to_string(fname.clone());
+        settings = Opt::from_args_with_toml(&toml_str).expect("toml parse failed");
+    } else {
+        settings = Opt::from_args();
+    }
 
     if settings.verbose {
       println!("{:?}", settings);
-      println!("{:?}", settings.verbose);
+      println!("config file: {:?}", fname);
+
+      return;
     }
 
-    // locate the config file, if any, here or recursively in parent folders
-    let path = env::current_dir().unwrap();
-    match find_config_file(&path) {
-        Some(filepath) => println!(".timesheet file is found: {:?}", filepath),
-        None => println!("No .timesheet file was found."),
-    };
 
     let mut gitvec: Vec<String> = vec![];
     // ckeck if the gitfile exists
