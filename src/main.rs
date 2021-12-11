@@ -16,7 +16,11 @@ use macjournal::process as frommacjournal;
 const CONFIG_FILENAME: &str = ".timesheet";
 #[derive(Debug, StructOpt)]
 #[structopt(name = "timesheet", about = "Timesheet input parser.")]
-struct Opt {
+pub struct Opt {
+    // Is this a dry run?
+    #[structopt(short, long)]
+    dryrun: bool,
+
     // The git log file
     #[structopt(short, parse(from_os_str), default_value = "/Users/steve/Dropbox/commits.sample.txt")]
     gitlogfile: PathBuf,
@@ -28,10 +32,18 @@ struct Opt {
     // The output file
     #[structopt(short, parse(from_os_str))]
     outfile: Option<PathBuf>,
+
+    #[structopt(short, long)]
+    verbose: bool,
 }
 
-
 fn main()  {
+    let settings = Opt::from_args();
+
+    if settings.verbose {
+      println!("{:?}", settings);
+      println!("{:?}", settings.verbose);
+    }
 
     // locate the config file, if any, here or recursively in parent folders
     let path = env::current_dir().unwrap();
@@ -40,12 +52,28 @@ fn main()  {
         None => println!("No .timesheet file was found."),
     };
 
-    let mut opt = Opt::from_args();
-    println!("{:?}", opt);
+    let mut gitvec: Vec<String> = vec![];
+    // ckeck if the gitfile exists
+    if std::path::Path::new(&settings.gitlogfile).exists() {
+        gitvec.extend(fromgit(&settings));
+    }
+
+    let mut macjournalvec: Vec<String> = vec![];
+    // ckeck if the gitfile exists
+    if std::path::Path::new(&settings.macjournalfile).exists() {
+        macjournalvec.extend(frommacjournal(&settings));
+    }
+
+    if settings.verbose {
+        println!("git lines: {}", gitvec.len());
+        println!("MacJournal lines: {}", macjournalvec.len());
+    }
 
     let mut cleanvec: Vec<String> = vec![];
-    cleanvec.extend(fromgit());
-    cleanvec.extend(frommacjournal());
+    cleanvec.extend(gitvec);
+    cleanvec.extend(macjournalvec);
+
+    if settings.dryrun {return};
 
     // the date being processed
     let mut curdate: &str = "";

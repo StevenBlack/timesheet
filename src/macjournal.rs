@@ -1,10 +1,9 @@
-use crate::utils::common::{file_to_string};
+use crate::{Opt};
 use regex::Regex;
 
-pub fn process() -> Vec<String> {
+pub fn process(settings: &Opt) -> Vec<String> {
     // load raw data
-    let file_path_and_name= "/Users/steve/Dropbox/macjournal.sample.txt".to_string();
-    let raw = file_to_string(file_path_and_name).trim().to_string();
+    let raw = std::fs::read_to_string(&settings.macjournalfile).unwrap();
 
     // vec of all notes, one element per line.
     let mut rawvec: Vec<String> = raw.lines().map(|l| l.trim().to_string()).collect();
