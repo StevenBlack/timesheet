@@ -58,9 +58,38 @@ pub mod common {
         let vecvec :Vec<Vec<String>> = readvec.iter().map(|l| l.split_whitespace().map(|l| l.to_string()).collect()).collect();
         vecvec
     }
+
+    pub fn commasand(mut vec: Vec<String>) -> String {
+        let length = vec.len();
+        if length > 1 {
+            vec[length - 1] = format!("and {}", vec[length - 1]);
+            if length == 2 {
+                return vec.join(" ").to_string();
+            }
+        }
+
+        vec.join(", ").to_string()
+    }
 }
 
-#[test]
-fn test_something() {
 
+#[cfg(test)]
+mod tests {
+    use super::common::*;
+
+    #[test]
+    fn test_commasand() {
+        let mut a = vec!();
+        a.push("Apples".to_string());
+        assert_eq!(commasand(a), "Apples".to_string());
+        a = vec!();
+        a.push("Apples".to_string());
+        a.push("oranges".to_string());
+        assert_eq!(commasand(a), "Apples and oranges".to_string());
+        a = vec!();
+        a.push("Apples".to_string());
+        a.push("oranges".to_string());
+        a.push("bananas".to_string());
+        assert_eq!(commasand(a), "Apples, oranges, and bananas".to_string());
+    }
 }
