@@ -59,7 +59,7 @@ pub mod common {
         vecvec
     }
 
-    pub fn commasand(mut vec: Vec<String>) -> String {
+    pub fn commas_and(mut vec: Vec<String>) -> String {
         let length = vec.len();
         if length > 1 {
             vec[length - 1] = format!("and {}", vec[length - 1]);
@@ -78,18 +78,18 @@ mod tests {
     use super::common::*;
 
     #[test]
-    fn test_commasand() {
+    fn test_commas_and() {
         let mut a = vec!();
         a.push("Apples".to_string());
-        assert_eq!(commasand(a), "Apples".to_string());
+        assert_eq!(commas_and(a), "Apples".to_string());
         a = vec!();
         a.push("Apples".to_string());
         a.push("oranges".to_string());
-        assert_eq!(commasand(a), "Apples and oranges".to_string());
+        assert_eq!(commas_and(a), "Apples and oranges".to_string());
         a = vec!();
         a.push("Apples".to_string());
         a.push("oranges".to_string());
         a.push("bananas".to_string());
-        assert_eq!(commasand(a), "Apples, oranges, and bananas".to_string());
+        assert_eq!(commas_and(a), "Apples, oranges, and bananas".to_string());
     }
 }
