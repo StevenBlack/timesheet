@@ -94,11 +94,6 @@ fn check_cleanraw() {
 }
 
 #[test]
-fn check_process() {
-    process();
-}
-
-#[test]
 fn check_consolidation() {
     // want this to be three lines
     let day = "

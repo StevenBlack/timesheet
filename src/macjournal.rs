@@ -37,11 +37,6 @@ fn isyyyymmdddate(lin:String) -> bool {
     re.is_match(lin.as_str())
 }
 
-#[test]
-fn check_macjournal() {
-    process();
-}
-
 pub fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
     // cleaning the vec
     let mut returnvec: Vec<String> = vec![];
