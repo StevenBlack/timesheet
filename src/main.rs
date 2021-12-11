@@ -12,7 +12,7 @@ use crate::types::{Commit, Commits, Semver};
 use git::process as fromgit;
 use macjournal::process as frommacjournal;
 
-// configuration
+// configuration file
 const CONFIG_FILENAME: &str = ".timesheet";
 #[derive(Debug, StructOpt)]
 #[structopt(name = "timesheet", about = "Timesheet input parser.")]
@@ -72,6 +72,7 @@ fn main()  {
     let mut cleanvec: Vec<String> = vec![];
     cleanvec.extend(gitvec);
     cleanvec.extend(macjournalvec);
+    cleanvec.sort();
 
     if settings.dryrun {return};
 
