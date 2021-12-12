@@ -16,7 +16,7 @@ use git::process as fromgit;
 use macjournal::process as frommacjournal;
 
 // configuration file
-const CONFIG_FILENAME: &str = ".timesheet";
+const CONFIG_FILENAME: &str = ".timesheetrc";
 #[derive(Debug, Deserialize, StructOpt, StructOptToml)]
 #[structopt(name = "timesheet", about = "Timesheet input parser.")]
 #[serde(default)]

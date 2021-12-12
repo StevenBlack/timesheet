@@ -1,0 +1,3 @@
+gitfile = ./commits.txt
+macjournalfile = ./macjournal.txt
+outfile = ./out.txt
