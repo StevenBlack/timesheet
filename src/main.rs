@@ -69,8 +69,6 @@ fn main()  {
     if settings.verbose {
       println!("{:?}", settings);
       println!("config file: {:?}", fname);
-
-      return;
     }
 
 
@@ -86,7 +84,7 @@ fn main()  {
         macjournalvec.extend(frommacjournal(&settings));
     }
 
-    if settings.verbose {
+    if settings.verbose || settings.dryrun {
         println!("git lines: {}", gitvec.len());
         println!("MacJournal lines: {}", macjournalvec.len());
     }
@@ -95,8 +93,11 @@ fn main()  {
     cleanvec.extend(gitvec);
     cleanvec.extend(macjournalvec);
     cleanvec.sort();
+    cleanvec.dedup();
 
-    if settings.dryrun {return};
+    if settings.dryrun {
+        return;
+    };
 
     // the date being processed
     let mut curdate: &str = "";
