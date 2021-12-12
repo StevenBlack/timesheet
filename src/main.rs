@@ -26,11 +26,11 @@ pub struct Opt {
     dryrun: bool,
 
     // The git log file
-    #[structopt(short, parse(from_os_str), default_value = "/Users/steve/Dropbox/commits.sample.txt")]
+    #[structopt(short, parse(from_os_str), default_value = "./commits.txt")]
     gitlogfile: PathBuf,
 
     // The MacJournal input file
-    #[structopt(short, parse(from_os_str), default_value = "/Users/steve/Dropbox/macjournal.sample.txt")]
+    #[structopt(short, parse(from_os_str), default_value = "./macjournal.txt")]
     macjournalfile: PathBuf,
 
     // The output file
