@@ -104,6 +104,7 @@ fn check_consolidation() {
     2021-10-15 Issue #423: make the pickers a bit smaller.
     2021-10-15 Issue #423: semantics — singular of drivers is driver.
     2021-10-15 Issue curation.".to_string();
+    let dayvec: Vec<String> = day.lines().map(|l| l.to_string()).collect();
 
     todo!("Finish this test");
 }

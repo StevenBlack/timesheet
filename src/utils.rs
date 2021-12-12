@@ -1,5 +1,5 @@
-// Steven Black's rust utils
-// This module contains helpful utilities I've collected along the way.
+/// Steven Black's rust utils
+/// This module contains helpful utilities I've collected along the way.
 #[allow(dead_code)]
 
 pub mod common {
@@ -10,7 +10,7 @@ pub mod common {
     use std::io::prelude::*;
     use std::fs::File;
 
-    // read a file to string
+    /// read a file to string.
     pub fn file_to_string(filename: String) -> String {
         let mut file = File::open(filename).expect("Unable to open the file");
         let mut contents = String::new();
@@ -18,6 +18,7 @@ pub mod common {
         contents
     }
 
+    /// convert a String to Vec<String>.
     pub fn string_to_vec(param: String) -> Vec<String> {
         param.lines().map(|l| l.to_string()).collect()
     }
@@ -26,7 +27,7 @@ pub mod common {
         param.split(splt.as_str()).map(|l| l.to_string()).collect()
     }
 
-    // read a file into Result<Vec<String>>
+    /// read a file into Result<Vec<String>>.
     pub fn file_to_vec(filename: String) -> io::Result<Vec<String>> {
         if fs::metadata(filename.clone()).is_err() {
             panic!("Bad file {}", filename);
@@ -36,7 +37,7 @@ pub mod common {
         Ok(file_reader.lines().filter_map(io::Result::ok).collect())
     }
 
-    // read a file into Vec<Vec<char>>
+    /// read a file into Vec<Vec<char>>.
     pub fn file_to_vec_of_char_vec(filename: String) -> Vec<Vec<char>> {
         let readresult = file_to_vec(filename);
         let readvec = match readresult {
@@ -46,7 +47,7 @@ pub mod common {
         readvec.iter().map(|l| l.chars().collect()).collect()
     }
 
-    // read a file into Vec<Vec<String>> (words)
+    /// read a file into Vec<Vec<String>> (words).
     pub fn file_to_vec_of_words_vec(filename: String) -> Vec<Vec<String>> {
         // let v:Vec<&str> = "Hello, world!".split_whitespace().collect();
         // let v:Vec<String> = "Hello, world! I'm having a great day, you?".split_whitespace().map(|w| w.to_string()).collect();
@@ -59,6 +60,7 @@ pub mod common {
         vecvec
     }
 
+    /// literate split, using  ", " with a trailing " and " as required.
     pub fn commas_and(mut vec: Vec<String>) -> String {
         let length = vec.len();
         if length > 1 {
