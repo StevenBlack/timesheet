@@ -18,25 +18,26 @@ use macjournal::process as frommacjournal;
 // configuration file
 const CONFIG_FILENAME: &str = ".timesheetrc";
 #[derive(Debug, Deserialize, StructOpt, StructOptToml)]
-#[structopt(name = "timesheet", about = "Timesheet input parser.")]
+#[structopt(name = "timesheet", about = "Timesheet from git log output and MaJournal export data.")]
 #[serde(default)]
 pub struct Opt {
-    // Is this a dry run?
+    /// Sets up a dry-run, does not timesheet create output
     #[structopt(short, long)]
     dryrun: bool,
 
-    // The git log file
+    /// The git log input file
     #[structopt(short, parse(from_os_str), default_value = "./commits.txt")]
     gitlogfile: PathBuf,
 
-    // The MacJournal input file
+    /// The MacJournal input file
     #[structopt(short, parse(from_os_str), default_value = "./macjournal.txt")]
     macjournalfile: PathBuf,
 
-    // The output file
+    /// Output file, stdout if not present
     #[structopt(short, parse(from_os_str))]
     outfile: Option<PathBuf>,
 
+    /// Putput process information
     #[structopt(short, long)]
     verbose: bool,
 }
@@ -67,8 +68,8 @@ fn main()  {
     }
 
     if settings.verbose {
-      println!("{:?}", settings);
-      println!("config file: {:?}", fname);
+      println!("Config file: {}", fname);
+      println!("Settings {:?}", settings);
     }
 
 
@@ -76,12 +77,21 @@ fn main()  {
     // ckeck if the gitfile exists
     if std::path::Path::new(&settings.gitlogfile).exists() {
         gitvec.extend(fromgit(&settings));
+    } else if settings.verbose {
+        println!(
+            "Git log file {:?} not found.",
+            &settings.gitlogfile.to_str()
+        );
     }
 
     let mut macjournalvec: Vec<String> = vec![];
     // ckeck if the gitfile exists
     if std::path::Path::new(&settings.macjournalfile).exists() {
         macjournalvec.extend(frommacjournal(&settings));
+    } else if settings.verbose {
+        println!(
+            "MacJournal file {:?} not found.",
+            &settings.macjournalfile.to_str());
     }
 
     if settings.verbose || settings.dryrun {
