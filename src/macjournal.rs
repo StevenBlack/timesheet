@@ -15,6 +15,7 @@ pub fn process(settings: &Opt) -> Vec<String> {
     // we need to normalize the listing
     cleanvec = dateprefix(cleanvec);
     cleanvec.sort();
+    cleanvec.dedup();
     cleanvec
 }
 

@@ -10,6 +10,7 @@ pub fn process(settings: &Opt)  -> Vec<String> {
     // vec of clean commits, one commit per element
     let mut cleanvec: Vec<String> = cleanraw(rawvec);
     cleanvec.sort();
+    cleanvec.dedup();
     cleanvec
 }
 
