@@ -109,7 +109,7 @@ fn main()  {
         return;
     };
 
-    // the date being processed
+    // the date currently being processed
     let mut curdate: &str = "";
 
     // vec of all Commits for a given date

@@ -69,11 +69,9 @@ pub mod common {
                 return vec.join(" ").to_string();
             }
         }
-
         vec.join(", ").to_string()
     }
 }
-
 
 #[cfg(test)]
 mod tests {
