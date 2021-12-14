@@ -9,7 +9,7 @@ use serde_derive::Deserialize;
 use structopt::StructOpt;
 use structopt_toml::StructOptToml;
 
-use crate::types::{Commit, Commits, Semver};
+use crate::types::{Commit, Commits, Semver, Issueprefix};
 // use crate::Semver;
 
 use git::process as fromgit;
@@ -140,24 +140,47 @@ fn main()  {
     for day in datevecs.iter() {
         datevecs_temp.push(semvercommits(day.clone()));
     }
-    if datevecs.len() != datevecs_temp.len() {
-        datevecs = datevecs_temp;
-    }
+    datevecs = datevecs_temp;
 
     // second: The "Issue #nnn: ..." lines
-
-
+    datevecs_temp = vec![];
+    for day in datevecs.iter() {
+        datevecs_temp.push(issueprefixcommits(day.clone()));
+    }
+    datevecs = datevecs_temp;
 
     // now output:
     for day in datevecs.iter() {
         let mut out = day[0].date.to_owned();
-        let xday = semvercommits(day.clone());
+        let xday = day.clone();
         for commit in xday {
             out.push_str(" ");
             out.push_str(commit.msg.as_str());
         }
         println!("{}", out);
     }
+}
+
+/// Squash the issue commits into a single vec element
+fn issueprefixcommits(commits: Commits) -> Commits {
+    let (issues, mut other):(Vec<Commit>, Vec<Commit>) = commits
+        .into_iter()
+        .partition(|x|(x.isissueprefix()));
+
+    if issues.len() == 0 {
+        return other;
+    }
+    let mut msgs: Vec<String> = vec![];
+    let date = &issues[0].date;
+    for c in &issues {
+        msgs.push(c.msg.clone());
+    }
+    let iss: Commit = Commit {
+        date: date.to_string(),
+        msg: format!("XXXX {:?} XXXX.", msgs),
+    };
+    other.push(iss);
+    return other;
 }
 
 /// Squash the semver commits into a single vec element
