@@ -1,6 +1,7 @@
 // types.rs
 use std::{fmt};
 use regex::Regex;
+use lazy_static::lazy_static;
 #[derive(Default, Clone, Debug)]
 pub struct Commit {
     pub date:String,
@@ -11,14 +12,17 @@ pub trait Semver {
     fn issemvertag(&self) -> bool;
 }
 
+lazy_static! {
+    static ref RE_SEMVER: Regex = Regex::new(r"^\d+\.\d+\.\d+$").unwrap();
+}
+
 impl Semver for Commit {
     // Matches digits only
     // 1 - Major
     // 2 - Minor
     // 3 - Patch
     fn issemvertag(&self) -> bool {
-        let re = Regex::new(r"^\d+\.\d+\.\d+$").unwrap();
-        re.is_match(&self.msg)
+        RE_SEMVER.is_match(&self.msg)
     }
 }
 
