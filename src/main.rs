@@ -182,6 +182,15 @@ fn semvercommits(commits: Commits) -> Commits {
     return other;
 }
 
+#[test]
+fn check_semvercommits() {
+    let mut testcommits: Commits = vec![];
+    testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "0.0.1".to_string() });
+    testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "0.0.2".to_string() });
+    let output = semvercommits(testcommits);
+    assert_eq!(output.len(), 1);
+}
+
 fn find_config_file(starting_directory: &Path) -> Option<PathBuf> {
     let mut path: PathBuf = starting_directory.into();
     let file = Path::new(CONFIG_FILENAME);
