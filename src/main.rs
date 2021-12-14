@@ -134,6 +134,20 @@ fn main()  {
         }
     }
 
+    // consolidate common repeated elements within days
+    // first: semver commits
+    let mut datevecs_temp: Vec<Commits> = vec![];
+    for day in datevecs.iter() {
+        datevecs_temp.push(semvercommits(day.clone()));
+    }
+    if datevecs.len() != datevecs_temp.len() {
+        datevecs = datevecs_temp;
+    }
+
+    // second: The "Issue #nnn: ..." lines
+
+
+
     // now output:
     for day in datevecs.iter() {
         let mut out = day[0].date.to_owned();
@@ -146,6 +160,7 @@ fn main()  {
     }
 }
 
+/// Squash the semver commits into a single vec element
 fn semvercommits(commits: Commits) -> Commits {
     let (semver, mut other):(Vec<Commit>, Vec<Commit>) = commits
         .into_iter()
@@ -159,7 +174,10 @@ fn semvercommits(commits: Commits) -> Commits {
     for c in &semver {
         msgs.push(c.msg.clone());
     }
-    let semv: Commit = Commit { date: date.to_string(), msg: format!("Versions {} built, tested, and rolled out.", commas_and(msgs)) };
+    let semv: Commit = Commit {
+        date: date.to_string(),
+        msg: format!("Versions {} built, tested, and rolled out.", commas_and(msgs)),
+    };
     other.push(semv);
     return other;
 }
