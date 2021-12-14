@@ -8,12 +8,13 @@ pub struct Commit {
     pub msg:String,
 }
 
-pub trait Semver {
-    fn issemvertag(&self) -> bool;
-}
-
 lazy_static! {
     static ref RE_SEMVER: Regex = Regex::new(r"^\d+\.\d+\.\d+$").unwrap();
+    static ref RE_ISSUEPREFIX: Regex = Regex::new(r"^Issue.*#.*:").unwrap();
+}
+
+pub trait Semver {
+    fn issemvertag(&self) -> bool;
 }
 
 impl Semver for Commit {
@@ -23,6 +24,19 @@ impl Semver for Commit {
     // 3 - Patch
     fn issemvertag(&self) -> bool {
         RE_SEMVER.is_match(&self.msg)
+    }
+}
+
+pub trait Issueprefix {
+    fn isissueprefix(&self) -> bool;
+}
+
+impl Issueprefix for Commit {
+    // "Issue #315: fix — replace the Input control..."
+    // "Issue #315: refactor — move fetchdata() to ...."
+    // "Issue #495: cosmetic fix — even shorter caption ..."
+    fn isissueprefix(&self) -> bool {
+        RE_ISSUEPREFIX.is_match(&self.msg)
     }
 }
 
