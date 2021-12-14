@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 mod utils;
 mod git;
 mod macjournal;
-use crate::utils::common::file_to_string;
+use crate::utils::common::{file_to_string, commas_and};
 mod types;
 use serde_derive::Deserialize;
 use structopt::StructOpt;
@@ -159,7 +159,7 @@ fn semvercommits(commits: Commits) -> Commits {
     for c in &semver {
         msgs.push(c.msg.clone());
     }
-    let semv: Commit = Commit { date: date.to_string(), msg: format!("Versions {} built, tested, and rolled out.", msgs.join(", ")) };
+    let semv: Commit = Commit { date: date.to_string(), msg: format!("Versions {} built, tested, and rolled out.", commas_and(msgs)) };
     other.push(semv);
     return other;
 }
