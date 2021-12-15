@@ -19,20 +19,24 @@ fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
     let mut returnvec: Vec<String> = vec![];
     let mut i = 0;
     for l in rawvec {
-        let mut temp = l.trim().replace("  ", " ");
+        let temp = l.trim().replace("  ", " ");
 
         if temp.len() == 0 {
-            continue;
-        }
-
-        // ignore commits containing "Ibid."
-        if temp.to_ascii_lowercase().trim().starts_with("ibid.") {
             continue;
         }
 
         // ignore commits containing "whitespace"
         if temp.to_ascii_lowercase().replace(" ", "").contains("whitespace") {
             continue;
+        }
+
+        // ignore commits containing "Ibid."
+        let dc: Option<(&str, &str)> = temp.split_once(" ");
+        if dc.is_some(){
+            let (_, m) = dc.unwrap();
+            if m.to_lowercase().starts_with("ibid.") {
+              continue;
+            }
         }
 
         // ignore commits containing "typo"
