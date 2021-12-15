@@ -1,0 +1,66 @@
+2021-12-15 Ibid.
+2021-12-15 Ibid.
+2021-12-15 More readme elaboration.
+2021-12-15 Update the readme.
+2021-12-15 Fix typo in the readme.
+2021-12-15 Fix typo in option documentaton.
+2021-12-15 Update the readme.
+2021-12-14 Implement the parsing of issue commits.
+2021-12-14 Remove test that doesn't belong here.
+2021-12-14 Simplify  naming to, simply, 'issue'.
+2021-12-14 Decent start on issue commit consolidation.
+2021-12-14 New trait on Commit: Isissueprefix.
+2021-12-14 Add a test for semver commit processing.
+2021-12-14 Better modularization for the semver consolidation test.
+2021-12-14 Ibid.
+2021-12-14 Optimize the semver regex definition so we don't build it with each function call.
+2021-12-13 Comment and whitespace.
+2021-12-13 Invoke commas_and() for semver commits.
+2021-12-12 Better comments for utils functions, now gradually moving to RustDoc compliance.
+2021-12-11 Improve help text.
+2021-12-11 The config file is now named .timesheetrc and we have a .timesheetrc-sample file.
+2021-12-11 Setting-up the dryrun option.
+2021-12-11 Better default file names.
+2021-12-11 Dedup the git log and macjournal vecs as part of their processing.
+2021-12-11 Latest cargo.lock.
+2021-12-11 Introducing the .timesheet config file.
+2021-12-11 Implement structopt-toml to give us the ability to use a TOML config file anywhere up the parent folder tree.
+2021-12-11 Sort the vec.
+2021-12-11 Rename fn commasand to fn ommas_and().
+2021-12-10 New function commasand(), to be used for consolidated enumeration.
+2021-12-10 Run everything through shared settings now.
+2021-12-10 Don't need these tests.
+2021-12-10 Playing with structopt.
+2021-12-10 Fix test.
+2021-12-10 Rename common.rs to utils.rs.
+2021-12-09 Small reorg of the readme.
+2021-12-09 Add another aspirational target feature to the readme.
+2021-12-09 Start roughing-in a basic config file named .timesheet.
+2021-12-09 Cleanup in the macjournal module.
+2021-12-09 Add structop struct, and marshall the vecs from both git and macjournal modules.
+2021-12-09 Refactor types and traits.
+2021-12-09 Move git module functionality to main.rs.
+2021-12-08 Add link to the definition of Ibid.
+2021-12-08 Better comment about these functions.
+2021-12-08 Add feature status icons.
+2021-12-08 Test for the semver tag detector.
+2021-12-08 Add bleeder for whitespace and typo commits.
+2021-12-08 Remove commented code.
+2021-12-08 Doesn't apply on the MacJournal side.
+2021-12-08 "Work in progress"
+2021-12-08 Add structopt to dependencies.
+2021-12-08 More readme shenanegans.
+2021-12-08 More readme tweaks.
+2021-12-08 More readme refinements.
+2021-12-08 Fix typo.
+2021-12-08 More readme fixes.
+2021-12-08 Update the readme.
+2021-12-08 Split everything into git and MacJournal modules.
+2021-12-07 Improvements on the MacJournal side.
+2021-12-07 Start processing the Macjournal export file.
+2021-12-07 Minor tidy.
+2021-12-07 Add to readme.
+2021-12-07 Create readme.md.
+2021-12-07 Improve the joining of elements, and handling of semver tags.
+2021-12-06 Incremental improvement with a Commuitstruc
+2021-12-06 First commit.
