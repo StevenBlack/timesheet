@@ -70,7 +70,7 @@ They should become the sentence "`Version 0.13.6 built, texted, and rolled out.`
 
 Commits that say trivial things like "`Fix whitespace`" or just "`Whitespace`", or "`Fix typo`" or just "`Typo`", or the latin "[`Ibid.`](https://en.wikipedia.org/wiki/Ibid.)", are dropped.
 
-### Repeated issue references (status: 🔴)
+### Repeated issue references (status: 🟢)
 
 Repeated commits referring to the same issue, originally this....
 ```
@@ -85,7 +85,7 @@ Issue #3138: fix — thing three.
 Issue #3138: fix — thing one; fix — thing two; fix — thing three.
 ```
 
-### Repeated version references (status: 🔴)
+### Repeated version references (status: 🟢)
 
 Handwritten version number commits lke ...
 ```
@@ -97,4 +97,26 @@ Handwritten version number commits lke ...
 
 ```
 Issue #3138: Something version 0.3.11, 0.3.12, and 0.3.13 built, tested, and rolled out.
+```
+
+## Usage
+
+```
+  ~ timesheet -h                                                         0:06:26
+timesheet 0.1.0
+Timesheet from git log output and MaJournal export data.
+
+USAGE:
+    timesheet [FLAGS] [OPTIONS]
+
+FLAGS:
+    -d, --dryrun     Sets up a dry-run, does not timesheet create output 🔴
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+    -v, --verbose    Putput process information 🔴
+
+OPTIONS:
+    -g <gitlogfile>            The git log input file [default: ./commits.txt] 🟢
+    -m <macjournalfile>        The MacJournal input file [default: ./macjournal.txt] 🟢
+    -o <outfile>               Output file, stdout if not present 🔴
 ```
