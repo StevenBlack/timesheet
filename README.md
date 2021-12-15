@@ -18,7 +18,7 @@ This is a tedious manual process.  Automate it!
 
 <img width="378" alt="automate-all-the-things" src="https://user-images.githubusercontent.com/80144/145323062-b6fadc17-34ff-4369-baea-de9420f9f288.png">
 
-### Raw input from `git log`
+## Raw input from `git log`
 
 My `git log` command is shaped like this:
 
