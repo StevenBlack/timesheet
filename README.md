@@ -1,7 +1,7 @@
 # 🕑 A daily timesheet aggregator for `git log` and MacJournal
 
 A personal project, written in [rust](https://www.rust-lang.org/).
-## This is an aggregator
+## This is an [aggregator](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Aggregator.html)
 
 <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/Aggregator.html"><img src="./aggregator.gif"></a>
 
