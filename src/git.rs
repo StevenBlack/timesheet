@@ -92,19 +92,3 @@ fn check_cleanraw() {
     assert_eq!(2, o.len());
     assert_eq!("this is alpha".to_string(), o.first().unwrap().to_string());
 }
-
-#[test]
-fn check_consolidation() {
-    // want this to be three lines
-    let day = "
-    2021-10-15 Issue #3082: exploring ways to make ghostscript optimization happen automatically.
-    2021-10-15 Issue #423: fix — limit the height of the picker.
-    2021-10-15 Issue #423: fix — Remove the keyExtractor function.
-    2021-10-15 Issue #423: fix — rename driver to drvr in this scope.
-    2021-10-15 Issue #423: make the pickers a bit smaller.
-    2021-10-15 Issue #423: semantics — singular of drivers is driver.
-    2021-10-15 Issue curation.".to_string();
-    let dayvec: Vec<String> = day.lines().map(|l| l.to_string()).collect();
-
-    todo!("Finish this test");
-}
