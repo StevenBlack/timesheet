@@ -1,5 +1,6 @@
 use std::env;
 use std::path::{Path, PathBuf};
+use std::collections::HashMap;
 mod utils;
 mod git;
 mod macjournal;
@@ -169,17 +170,35 @@ fn issuecommits(commits: Commits) -> Commits {
     if issues.len() == 0 {
         return other;
     }
-    let mut msgs: Vec<String> = vec![];
+    let mut issueshashmap: HashMap<&str, Vec<&str>> = HashMap::new();
     let date = &issues[0].date;
     for c in &issues {
-        msgs.push(c.msg.clone());
+        let (issue, desc) = c.msg.split_once(':').unwrap();
+        let trimmed = desc.trim_end_matches(".");
+        issueshashmap.entry(issue).or_insert_with(Vec::new).push(trimmed);
     }
-    let iss: Commit = Commit {
-        date: date.to_string(),
-        msg: format!("XXXX {:?} XXXX.", msgs),
-    };
-    other.push(iss);
+    for (key, value) in issueshashmap.iter() {
+        let iss: Commit = Commit {
+            date: date.to_owned(),
+            msg: format!("{}:{}.", key.to_string(), value.join(";").to_string()),
+        };
+        other.push(iss);
+    }
     return other;
+}
+
+#[test]
+fn check_issuecommits() {
+    let mut testcommits: Commits = vec![];
+    testcommits.push(Commit{ date: "2021-10-15".to_string(), msg: "Issue #3082: exploring ways to make ghostscript optimization happen automatically.".to_string()});
+    testcommits.push(Commit{ date: "2021-10-15".to_string(), msg: "Issue #423: fix — limit the height of the picker.".to_string()});
+    testcommits.push(Commit{ date: "2021-10-15".to_string(), msg: "Issue #423: fix — Remove the keyExtractor function.".to_string()});
+    testcommits.push(Commit{ date: "2021-10-15".to_string(), msg: "Issue #423: fix — rename driver to drvr in this scope.".to_string()});
+    testcommits.push(Commit{ date: "2021-10-15".to_string(), msg: "Issue #423: make the pickers a bit smaller.".to_string()});
+    testcommits.push(Commit{ date: "2021-10-15".to_string(), msg: "Issue #423: semantics — singular of drivers is driver.".to_string()});
+    testcommits.push(Commit{ date: "2021-10-15".to_string(), msg: "Issue curation.".to_string()});
+    let output = issuecommits(testcommits);
+    assert_eq!(output.len(), 3);
 }
 
 /// Squash the semver commits into a single vec element
