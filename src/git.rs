@@ -26,7 +26,7 @@ fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
         }
 
         // ignore commits containing "Ibid."
-        if temp.to_ascii_lowercase().contains("ibid.") {
+        if temp.to_ascii_lowercase().trim().starts_with("ibid.") {
             continue;
         }
 

@@ -136,7 +136,7 @@ OPTIONS:
 Using this repository, for example:
 
 ```
-$ git log --pretty="format:%cd %s" --since="60 days ago" --date="short" >> "gitoutput.txt"
+$ git log --pretty="format:%cd %s" --since="60 days ago" --date="short" > "gitoutput.txt"
 $ timesheet -g gitoutput.txt > clean.txt
 ```
 
