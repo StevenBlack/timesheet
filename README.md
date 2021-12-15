@@ -18,14 +18,14 @@ This is a tedious manual process.  Automate it!
 
 <img width="378" alt="automate-all-the-things" src="https://user-images.githubusercontent.com/80144/145323062-b6fadc17-34ff-4369-baea-de9420f9f288.png">
 
-### Raw output from `git log`
+### Raw input from `git log`
 
-The `git` command looks like this...
+My `git log` command is shaped like this:
 
 ```
 git log --pretty="format:%cd %s" --since="60 days ago" --date="short" >> "gitoutput.txt"
 ```
-... which produces output like this:
+... which produces a log that like this:
 
 ```
 2021-12-01 0.13.6
@@ -37,7 +37,9 @@ git log --pretty="format:%cd %s" --since="60 days ago" --date="short" >> "gitout
 2021-12-01 Issue 405: refactor — reorganise this long query to make it easier to deconstruct.
 2021-12-01 After hours — update test/dev data.
 ```
-## Raw output from MacJournal export
+## Raw input from MacJournal export
+
+Selecting a bunch of dates in MacJournal then right+click ➡️ rExport gives me a bunch of dates, each day looks like this:
 
 ```
 Date: 1 December 2021 at 12:15
@@ -54,15 +56,15 @@ After hours — update test/dev data.
 ```
 ## What I need
 
-All the above input consolidated on one line per day that looks like this:
+Those inputs are aggregated into one line of literate text, on one line per day, that looks like this:
 
 ```
-2021-12-01 Version 0.10.27 built, tested, and rolled out. After hours ... etc...
+2021-12-01 Afternoon coordination meeting with QA.  etc...
 ```
 
 ## Details
 
-The following refinements (should) apply:
+The following applies:
 
 ### Git tags (status: 🟢)
 
@@ -89,7 +91,7 @@ Issue #3138: fix — thing three.
 Issue #3138: fix — thing one; fix — thing two; fix — thing three.
 ```
 
-### Repeated version references (status: 🟢)
+### Repeated version references (status: 🔴)
 
 Handwritten version number commits lke ...
 ```
