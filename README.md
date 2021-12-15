@@ -102,7 +102,8 @@ Issue #3138: Something version 0.3.11, 0.3.12, and 0.3.13 built, tested, and rol
 ## Usage
 
 ```
-  ~ timesheet -h                                                         0:06:26
+$ timesheet -h
+
 timesheet 0.1.0
 Timesheet from git log output and MaJournal export data.
 
