@@ -39,7 +39,7 @@ git log --pretty="format:%cd %s" --since="60 days ago" --date="short" >> "gitout
 ```
 ## Raw input from MacJournal export
 
-Selecting a bunch of dates in MacJournal then right+click ➡️ rExport gives me a bunch of dates, each day looks like this:
+Selecting a bunch of entries in MacJournal then right+click ➡️ Export gives me a bunch of dates, each day looks like this:
 
 ```
 Date: 1 December 2021 at 12:15
@@ -64,28 +64,30 @@ Those inputs are aggregated into one line of literate text, on one line per day,
 
 ## Details
 
-The following applies:
+The following apply:
 
 ### Git tags (status: 🟢)
 
-Lines with raw git tags look like this: "`0.13.6`".
+**Input**: Lines with raw git tags look like this: "`0.13.6`".
 
-They should become the sentence "`Version 0.13.6 built, texted, and rolled out.`"
+**Output**: They should become the sentence "`Version 0.13.6 built, texted, and rolled out.`"
 
 ### Remove trivial commits (status: 🟢)
 
-Commits that say trivial things like "`Fix whitespace`" or just "`Whitespace`", or "`Fix typo`" or just "`Typo`", or the latin "[`Ibid.`](https://en.wikipedia.org/wiki/Ibid.)", are dropped.
+**Input**: Commits that say trivial things like "`Fix whitespace`" or just "`Whitespace`", or "`Fix typo`" or just "`Typo`", or the latin "[`Ibid.`](https://en.wikipedia.org/wiki/Ibid.)", are dropped.
+
+**Output**: nothing.
 
 ### Repeated issue references (status: 🟢)
 
-Repeated commits referring to the same issue, originally this....
+**Input**: Repeated commits referring to the same issue, originally this....
 ```
 Issue #3138: fix — thing one.
 Issue #3138: fix — thing two.
 Issue #3138: fix — thing three.
 ```
 
-... become (note the semicolon `;` delimiter and the period `.` at the end.)
+**Output**: ... become (note the semicolon `;` delimiter and the period `.` at the end.)
 
 ```
 Issue #3138: fix — thing one; fix — thing two; fix — thing three.
@@ -93,13 +95,14 @@ Issue #3138: fix — thing one; fix — thing two; fix — thing three.
 
 ### Repeated version references (status: 🔴)
 
-Handwritten version number commits lke ...
+**Input**: Handwritten version number commits lke ...
 ```
 2021-12-01 Something version 0.3.11
 2021-12-01 Something version 0.3.12
 2021-12-01 Something version 0.3.13
 ```
-... become (note the semicolon `,` except with `and` as the last delimiter, and the period `.` at the end.)
+
+**Output**: ... become (note the semicolon `,` except with `and` as the last delimiter, and the period `.` at the end.)
 
 ```
 Issue #3138: Something version 0.3.11, 0.3.12, and 0.3.13 built, tested, and rolled out.
