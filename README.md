@@ -1,16 +1,20 @@
-# 🕑 `git log` and MacJournal export parser
+# 🕑 A daily timesheet aggregator for `git log` and MacJournal
 
-A personal project, written in rust.
+A personal project, written in [rust](https://www.rust-lang.org/).
+## This is an aggregator
 
-**WORK IN PROGRESS; NOT READY**
+<a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/Aggregator.html"><img src="./aggregator.gif"></a>
 
-This repo consolidates daily activity from two different sources and produces one consolidated line per day.
+> The ***Aggregator*** is a special Filter that receives a stream of messages and identifies messages that are correlated. Once a complete set of messages has been received (more on how to decide when a set is 'complete' below), the Aggregator collects information from each correlated message and publishes a single, aggregated message to the output channel for further processing.
+
+We aggregate records from different sources — [`git log`](https://git-scm.com/docs/git-log) and [MacJournal](https://danschimpf.com/) — into one literate timesheet paragraph per day.
 
 ## Background
 
-When I track project time and tasks, I use `git log` reports, and ad-hoc daily notes kept in (the most excellent) [MacJournal](https://danschimpf.com/). I merge these two sources to create one spreadsheet cell per day.
+I use `git log` and (the most excellent) [MacJournal](https://danschimpf.com/) for journalling.
+I merge these two sources to create a one paragraph summary of my project day.
 
-This is a tedious manual process.
+This is a tedious manual process.  Automate it!
 
 <img width="378" alt="automate-all-the-things" src="https://user-images.githubusercontent.com/80144/145323062-b6fadc17-34ff-4369-baea-de9420f9f288.png">
 
