@@ -134,6 +134,8 @@ fn main()  {
             datevec.push(commit);
         }
     }
+    // and finally,
+    datevecs.push(datevec);
 
     // consolidate semver commits within days
     let mut datevecs_temp: Vec<Commits> = vec![];
