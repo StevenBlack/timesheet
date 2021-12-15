@@ -38,7 +38,7 @@ pub struct Opt {
     #[structopt(short, parse(from_os_str))]
     outfile: Option<PathBuf>,
 
-    /// Putput process information
+    /// Output process information
     #[structopt(short, long)]
     verbose: bool,
 }
