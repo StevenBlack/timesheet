@@ -142,14 +142,26 @@ $ timesheet -g gitoutput.txt > clean.txt
 
 Yields this in `clean.txt`:
 
+(Updated: December 15, 2021)
+
 ```
+2021-11-25 Issue curation. Review recent commits from Esad.
+2021-11-26 Issue #495: Review recent commits, recent comments from Esad.
+2021-11-27 Issue #3136: modified scheduled tasks on Coolwind-SQL01 server to run under my account, whether I'm logged in or not. Issue #3167: saving the link to the latest version of Redemption.
+2021-11-28 Issue #495: helping Esad through nuances of our data structures and our premade API endpoints. Issue #3136: change the address of the actions behind importing clocks; verified it all works now!.
+2021-11-29 After hours — update test/dev data. Final testing of Push 0.13.0. Issue #3138 Linda reports that the part isn't showing on the batch drawing, so investigating that. Issue 3138: adjust a part for Linda, and regenerate its lot drawing. Morning call with Linda. Release Push 0.13.0. Issue #3139: delete all the shipped bird screen frames from the webparts table. Issue #3140: new issue about making zMisc parts easy to move and merge.
+2021-11-30 After hours — update test/dev data. Call with Linda and Alex about Issue #2967. Email with Connie about signing in with office WiFi vs signing in through the cellular network. Issue curation.
+2021-12-02 After hours — update test/dev data. Call with Linda and Alex. Issue curation. Review Alex commits. Review Esad's latest commits. Issue #3144: add a column comment to column jblive.public.webdocs.modified.
+2021-12-03 Afternoon call with Linda. Discussions with Esad. Email to Alex about next steps. Email to Connie about workers using very old versions of the Push app. Email with Connie about Ramone Campbell's phone. Morning call with Linda. Issue #3147: fix — create and populate the `rolecolors` tavle.
+2021-12-04 After hours — update test/dev data. Issue curation. Refresh the Ubuntu warm standby server. Testing all that's new in the Push app. Update the dev database on centos. Issue #542: liaise with Esad about passing the Jobid when drilling down on the Jobs screen.
 2021-12-06 First commit. Incremental improvement with a Commuitstruc
 2021-12-07 Add to readme. Create readme.md. Improve the joining of elements, and handling of semver tags. Improvements on the MacJournal side. Minor tidy. Start processing the Macjournal export file.
-2021-12-08 "Work in progress" Add feature status icons. Add structopt to dependencies. Better comment about these functions. Doesn't apply on the MacJournal side. More readme fixes. More readme refinements. More readme shenanegans. More readme tweaks. Remove commented code. Split everything into git and MacJournal modules. Test for the semver tag detector. Update the readme.
+2021-12-08 "Work in progress" Add feature status icons. Add link to the definition of Ibid. Add structopt to dependencies. Better comment about these functions. Doesn't apply on the MacJournal side. More readme fixes. More readme refinements. More readme shenanegans. More readme tweaks. Remove commented code. Split everything into git and MacJournal modules. Test for the semver tag detector. Update the readme.
 2021-12-09 Add another aspirational target feature to the readme. Add structop struct, and marshall the vecs from both git and macjournal modules. Cleanup in the macjournal module. Move git module functionality to main.rs. Refactor types and traits. Small reorg of the readme. Start roughing-in a basic config file named .timesheet.
 2021-12-10 Don't need these tests. Fix test. New function commasand(), to be used for consolidated enumeration. Playing with structopt. Rename common.rs to utils.rs. Run everything through shared settings now.
 2021-12-11 Better default file names. Dedup the git log and macjournal vecs as part of their processing. Implement structopt-toml to give us the ability to use a TOML config file anywhere up the parent folder tree. Improve help text. Introducing the .timesheet config file. Latest cargo.lock. Rename fn commasand to fn ommas_and(). Setting-up the dryrun option. Sort the vec. The config file is now named .timesheetrc and we have a .timesheetrc-sample file.
 2021-12-12 Better comments for utils functions, now gradually moving to RustDoc compliance.
 2021-12-13 Invoke commas_and() for semver commits.
 2021-12-14 Add a test for semver commit processing. Better modularization for the semver consolidation test. Decent start on issue commit consolidation. Implement the parsing of issue commits. New trait on Commit: Isissueprefix. Optimize the semver regex definition so we don't build it with each function call. Remove test that doesn't belong here. Simplify naming to, simply, 'issue'.
+2021-12-15 More readme elaboration. Only drop 'Ibid.' commits if the line starts with 'Ibid.'. Provide a coherent example, and update the peadme. Update readme. Update the readme.
 ```
