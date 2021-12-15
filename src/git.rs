@@ -40,40 +40,12 @@ fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
             continue;
         }
 
-        // Does this line contain a MacJournal export date?
-        if temp.len() > 5 && &temp[0..5] == "Date:" {
-            temp = cleanrawdate(temp);
-        }
-
         if temp.len() > 0 {
             returnvec.push(temp.to_string());
         }
         i = i + 1;
     }
     returnvec
-}
-
-fn cleanrawdate(datestring: String) -> String {
-    let strvec:Vec<_> =datestring.split_ascii_whitespace().collect();
-    let day = format!("{:0>2}", strvec[1]);
-    let year = strvec[3];
-    let monthstr = match strvec[2] {
-        "January" => "01",
-        "February" => "02",
-        "March" => "03",
-        "April" => "04",
-        "May" => "05",
-        "June" => "06",
-        "July" => "07",
-        "August" => "08",
-        "September" => "09",
-        "October" => "10",
-        "November" => "11",
-        "December" => "12",
-        _ => "00"
-    };
-    let month = monthstr.to_string();
-    format!("{}-{}-{}", year, month, day).to_string()
 }
 
 #[test]
