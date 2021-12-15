@@ -10,7 +10,7 @@ pub struct Commit {
 
 lazy_static! {
     static ref RE_SEMVER: Regex = Regex::new(r"^\d+\.\d+\.\d+$").unwrap();
-    static ref RE_ISSUEPREFIX: Regex = Regex::new(r"^Issue.*#.*:").unwrap();
+    static ref RE_ISSUE: Regex = Regex::new(r"^Issue.*#.*:").unwrap();
 }
 
 pub trait Semver {
@@ -27,16 +27,16 @@ impl Semver for Commit {
     }
 }
 
-pub trait Issueprefix {
-    fn isissueprefix(&self) -> bool;
+pub trait Issue {
+    fn isissue(&self) -> bool;
 }
 
-impl Issueprefix for Commit {
+impl Issue for Commit {
     // "Issue #315: fix — replace the Input control..."
     // "Issue #315: refactor — move fetchdata() to ...."
     // "Issue #495: cosmetic fix — even shorter caption ..."
-    fn isissueprefix(&self) -> bool {
-        RE_ISSUEPREFIX.is_match(&self.msg)
+    fn isissue(&self) -> bool {
+        RE_ISSUE.is_match(&self.msg)
     }
 }
 

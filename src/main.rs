@@ -9,7 +9,7 @@ use serde_derive::Deserialize;
 use structopt::StructOpt;
 use structopt_toml::StructOptToml;
 
-use crate::types::{Commit, Commits, Semver, Issueprefix};
+use crate::types::{Commit, Commits, Semver, Issue};
 // use crate::Semver;
 
 use git::process as fromgit;
@@ -53,7 +53,7 @@ fn main()  {
             // println!(".timesheet file is found: {:?}", filepath);
         },
         _ => {
-            // println!("No .timesheet file was found.");
+            // println!("No .timesheet file found.");
         },
     };
 
@@ -134,18 +134,17 @@ fn main()  {
         }
     }
 
-    // consolidate common repeated elements within days
-    // first: semver commits
+    // consolidate semver commits within days
     let mut datevecs_temp: Vec<Commits> = vec![];
     for day in datevecs.iter() {
         datevecs_temp.push(semvercommits(day.clone()));
     }
     datevecs = datevecs_temp;
 
-    // second: The "Issue #nnn: ..." lines
+    // consolidate "Issue #nnn: ..."  commits within days
     datevecs_temp = vec![];
     for day in datevecs.iter() {
-        datevecs_temp.push(issueprefixcommits(day.clone()));
+        datevecs_temp.push(issuecommits(day.clone()));
     }
     datevecs = datevecs_temp;
 
@@ -162,10 +161,10 @@ fn main()  {
 }
 
 /// Squash the issue commits into a single vec element
-fn issueprefixcommits(commits: Commits) -> Commits {
+fn issuecommits(commits: Commits) -> Commits {
     let (issues, mut other):(Vec<Commit>, Vec<Commit>) = commits
         .into_iter()
-        .partition(|x|(x.isissueprefix()));
+        .partition(|x|(x.isissue()));
 
     if issues.len() == 0 {
         return other;
