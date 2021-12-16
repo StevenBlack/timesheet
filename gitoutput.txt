@@ -1,3 +1,7 @@
+2021-12-15 Update readme and demo input and output.
+2021-12-15 Better handling for dropping 'Ibid.' commits.
+2021-12-15 This functionality does not apply.
+2021-12-15 Ensure the very last day iterated ends-up in datevecs.
 2021-12-15 Only drop 'Ibid.' commits if the line starts with 'Ibid.'.
 2021-12-15 Update readme.
 2021-12-15 Provide a coherent example, and update the peadme.

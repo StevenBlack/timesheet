@@ -120,7 +120,7 @@ fn main()  {
     let mut datevecs: Vec<Commits> = vec![];
 
     // load our datevecs
-    for commit in cleanvec.iter() {
+    for (index, commit) in cleanvec.iter().enumerate() {
         // split the date from the message
         let (date, msg) = commit.split_once(' ').unwrap();
         let commit = Commit{ date: date.to_string(), msg: msg.to_string() };
@@ -132,6 +132,8 @@ fn main()  {
             datevec = vec![commit];
         } else {
             datevec.push(commit);
+        }
+        if index == cleanvec.len() {
         }
     }
     // and finally,
