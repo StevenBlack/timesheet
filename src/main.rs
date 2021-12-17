@@ -260,15 +260,34 @@ fn check_semvercommits() {
     let output = semvercommits(testcommits);
     assert_eq!(output.len(), 1);
 }
-
-
+#[test]
 fn check_versionsemvercommits() {
+    let mut testcommits: Commits = vec![];
+    testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "Bar version 0.10.0".to_string() });
+    let output = versionsemvercommits(testcommits);
+    assert_eq!(output.len(), 1);
+    assert_eq!(output[0].msg, "Bar version 0.10.0 built, tested, and rolled out.".to_string());
+}
+
+#[test]
+fn check_versionsemvercommits_2() {
+    let mut testcommits: Commits = vec![];
+    testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "Foo version 0.0.1".to_string() });
+    testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "Foo version 0.0.2".to_string() });
+    testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "Foo version 0.0.3".to_string() });
+    let output = versionsemvercommits(testcommits);
+    assert_eq!(output.len(), 1);
+    assert_eq!(output[0].msg, "Foo versions 0.0.1, 0.0.2, and 0.0.3 built, tested, and rolled out.".to_string());
+}
+
+#[test]
+fn check_versionsemvercommits_3() {
     let mut testcommits: Commits = vec![];
     testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "Bar version 0.10.0".to_string() });
     testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "Foo version 0.0.1".to_string() });
     testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "Foo version 0.0.2".to_string() });
     testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "Foo version 0.0.3".to_string() });
-    let output = semvercommits(testcommits);
+    let output = versionsemvercommits(testcommits);
     assert_eq!(output.len(), 2);
 }
 
