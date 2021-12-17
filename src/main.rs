@@ -9,6 +9,7 @@ mod types;
 use serde_derive::Deserialize;
 use structopt::StructOpt;
 use structopt_toml::StructOptToml;
+use types::Commitinfo;
 
 use crate::types::{Commit, Commits, Semver, Issue};
 // use crate::Semver;
@@ -134,6 +135,13 @@ fn main()  {
     }
     datevecs = datevecs_temp;
 
+    // consolidate version semver commits within days
+    datevecs_temp = vec![];
+    for day in datevecs.iter() {
+        datevecs_temp.push(versionsemvercommits(day.clone()));
+    }
+    datevecs = datevecs_temp;
+
     // consolidate "Issue #nnn: ..."  commits within days
     datevecs_temp = vec![];
     for day in datevecs.iter() {
@@ -155,26 +163,26 @@ fn main()  {
 
 /// Squash the issue commits into a single vec element
 fn issuecommits(commits: Commits) -> Commits {
-    let (issues, mut other):(Vec<Commit>, Vec<Commit>) = commits
+    let (matches, mut other):(Vec<Commit>, Vec<Commit>) = commits
         .into_iter()
         .partition(|x|(x.isissue()));
 
-    if issues.len() == 0 {
+    if matches.len() == 0 {
         return other;
     }
-    let mut issueshashmap: HashMap<&str, Vec<&str>> = HashMap::new();
-    let date = &issues[0].date;
-    for c in &issues {
-        let (issue, desc) = c.msg.split_once(':').unwrap();
+    let mut hashmap: HashMap<&str, Vec<&str>> = HashMap::new();
+    let date = &matches[0].date;
+    for c in &matches {
+        let (mtch, desc) = c.msg.split_once(':').unwrap();
         let trimmed = desc.trim_end_matches(".");
-        issueshashmap.entry(issue).or_insert_with(Vec::new).push(trimmed);
+        hashmap.entry(mtch).or_insert_with(Vec::new).push(trimmed);
     }
-    for (key, value) in issueshashmap.iter() {
-        let iss: Commit = Commit {
+    for (key, value) in hashmap.iter() {
+        let commit: Commit = Commit {
             date: date.to_owned(),
             msg: format!("{}:{}.", key.to_string(), value.join(";").to_string()),
         };
-        other.push(iss);
+        other.push(commit);
     }
     return other;
 }
@@ -195,23 +203,52 @@ fn check_issuecommits() {
 
 /// Squash the semver commits into a single vec element
 fn semvercommits(commits: Commits) -> Commits {
-    let (semver, mut other):(Vec<Commit>, Vec<Commit>) = commits
+    let (matches, mut other):(Vec<Commit>, Vec<Commit>) = commits
         .into_iter()
         .partition(|x|(x.issemvertag()));
 
-    if semver.len() == 0 {
+    if matches.len() == 0 {
         return other;
     }
     let mut msgs: Vec<String> = vec![];
-    let date = &semver[0].date;
-    for c in &semver {
+    let date = &matches[0].date;
+    for c in &matches {
         msgs.push(c.msg.clone());
     }
-    let semv: Commit = Commit {
+    let v = if msgs.len() < 2 { "version" } else { "versions" };
+    let fixed: Commit = Commit {
         date: date.to_string(),
-        msg: format!("Versions {} built, tested, and rolled out.", commas_and(msgs)),
+        msg: format!("{} {} built, tested, and rolled out.", v, commas_and(msgs)),
     };
-    other.push(semv);
+    other.push(fixed);
+    return other;
+}
+
+/// Squash the version semver commits into a single vec element
+fn versionsemvercommits(commits: Commits) -> Commits {
+    let (matches, mut other):(Vec<Commit>, Vec<Commit>) = commits
+        .into_iter()
+        .partition(|x|(x.isversionsemvertag() && x.msg_words() < 5));
+
+    if matches.len() == 0 {
+        return other;
+    }
+    let mut hashmap: HashMap<String, Vec<String>> = HashMap::new();
+    let date = &matches[0].date;
+    for c in &matches {
+        let (mtch, rest) = c.msg.split_once(' ').unwrap();
+        let (version, desc) = rest.split_once(' ').unwrap();
+        let trimmed = desc.trim_end_matches(".");
+        hashmap.entry(mtch.to_string()).or_insert_with(Vec::new).push(trimmed.to_string());
+    }
+    for (key, msgs) in hashmap.iter() {
+        let v = if msgs.len() < 2 { "version" } else { "versions" };
+        let commit: Commit = Commit {
+            date: date.to_owned(),
+            msg: format!("{} {} {} built, tested, and rolled out.", key.to_string(), v, commas_and(msgs.clone())),
+        };
+        other.push(commit);
+    }
     return other;
 }
 
@@ -222,6 +259,17 @@ fn check_semvercommits() {
     testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "0.0.2".to_string() });
     let output = semvercommits(testcommits);
     assert_eq!(output.len(), 1);
+}
+
+
+fn check_versionsemvercommits() {
+    let mut testcommits: Commits = vec![];
+    testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "Bar version 0.10.0".to_string() });
+    testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "Foo version 0.0.1".to_string() });
+    testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "Foo version 0.0.2".to_string() });
+    testcommits.push(Commit{ date: "2021-01-01".to_string(), msg: "Foo version 0.0.3".to_string() });
+    let output = semvercommits(testcommits);
+    assert_eq!(output.len(), 2);
 }
 
 fn find_config_file(starting_directory: &Path) -> Option<PathBuf> {
