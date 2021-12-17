@@ -22,10 +22,6 @@ const CONFIG_FILENAME: &str = ".timesheetrc";
 #[structopt(name = "timesheet", about = "Timesheet from git log output and MaJournal export data.")]
 #[serde(default)]
 pub struct Opt {
-    /// Sets up a dry-run, does not timesheet create output
-    #[structopt(short, long)]
-    dryrun: bool,
-
     /// The git log input file
     #[structopt(short, parse(from_os_str), default_value = "./commits.txt")]
     gitlogfile: PathBuf,
@@ -95,7 +91,7 @@ fn main()  {
             &settings.macjournalfile.to_str());
     }
 
-    if settings.verbose || settings.dryrun {
+    if settings.verbose {
         println!("git lines: {}", gitvec.len());
         println!("MacJournal lines: {}", macjournalvec.len());
     }
@@ -105,10 +101,6 @@ fn main()  {
     cleanvec.extend(macjournalvec);
     cleanvec.sort();
     cleanvec.dedup();
-
-    if settings.dryrun {
-        return;
-    };
 
     // the date currently being processed
     let mut curdate: &str = "";
