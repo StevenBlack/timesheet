@@ -163,19 +163,19 @@ fn main()  {
 
 /// Squash the issue commits into a single vec element
 fn issuecommits(commits: Commits) -> Commits {
-    let (matches, mut other):(Vec<Commit>, Vec<Commit>) = commits
+    let (takes, mut other):(Vec<Commit>, Vec<Commit>) = commits
         .into_iter()
         .partition(|x|(x.isissue()));
 
-    if matches.len() == 0 {
+    if takes.len() == 0 {
         return other;
     }
     let mut hashmap: HashMap<&str, Vec<&str>> = HashMap::new();
-    let date = &matches[0].date;
-    for c in &matches {
-        let (mtch, desc) = c.msg.split_once(':').unwrap();
+    let date = &takes[0].date;
+    for c in &takes {
+        let (take, desc) = c.msg.split_once(':').unwrap();
         let trimmed = desc.trim_end_matches(".");
-        hashmap.entry(mtch).or_insert_with(Vec::new).push(trimmed);
+        hashmap.entry(take).or_insert_with(Vec::new).push(trimmed);
     }
     for (key, value) in hashmap.iter() {
         let commit: Commit = Commit {
@@ -203,16 +203,16 @@ fn check_issuecommits() {
 
 /// Squash the semver commits into a single vec element
 fn semvercommits(commits: Commits) -> Commits {
-    let (matches, mut other):(Vec<Commit>, Vec<Commit>) = commits
+    let (takes, mut other):(Vec<Commit>, Vec<Commit>) = commits
         .into_iter()
         .partition(|x|(x.issemvertag()));
 
-    if matches.len() == 0 {
+    if takes.len() == 0 {
         return other;
     }
     let mut msgs: Vec<String> = vec![];
-    let date = &matches[0].date;
-    for c in &matches {
+    let date = &takes[0].date;
+    for c in &takes {
         msgs.push(c.msg.clone());
     }
     let v = if msgs.len() < 2 { "version" } else { "versions" };
@@ -226,20 +226,20 @@ fn semvercommits(commits: Commits) -> Commits {
 
 /// Squash the version semver commits into a single vec element
 fn versionsemvercommits(commits: Commits) -> Commits {
-    let (matches, mut other):(Vec<Commit>, Vec<Commit>) = commits
+    let (takes, mut other):(Vec<Commit>, Vec<Commit>) = commits
         .into_iter()
         .partition(|x|(x.isversionsemvertag() && x.msg_words() < 5));
 
-    if matches.len() == 0 {
+    if takes.len() == 0 {
         return other;
     }
     let mut hashmap: HashMap<String, Vec<String>> = HashMap::new();
-    let date = &matches[0].date;
-    for c in &matches {
-        let (mtch, rest) = c.msg.split_once(' ').unwrap();
-        let (version, desc) = rest.split_once(' ').unwrap();
+    let date = &takes[0].date;
+    for c in &takes {
+        let (take, rest) = c.msg.split_once(' ').unwrap();
+        let (_, desc) = rest.split_once(' ').unwrap();
         let trimmed = desc.trim_end_matches(".");
-        hashmap.entry(mtch.to_string()).or_insert_with(Vec::new).push(trimmed.to_string());
+        hashmap.entry(take.to_string()).or_insert_with(Vec::new).push(trimmed.to_string());
     }
     for (key, msgs) in hashmap.iter() {
         let v = if msgs.len() < 2 { "version" } else { "versions" };
