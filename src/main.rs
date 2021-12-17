@@ -30,10 +30,6 @@ pub struct Opt {
     #[structopt(short, parse(from_os_str), default_value = "./macjournal.txt")]
     macjournalfile: PathBuf,
 
-    /// Output file, stdout if not present
-    #[structopt(short, parse(from_os_str))]
-    outfile: Option<PathBuf>,
-
     /// Output process information
     #[structopt(short, long)]
     verbose: bool,
