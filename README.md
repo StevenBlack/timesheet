@@ -25,7 +25,7 @@ My `git log` command is shaped like this:
 ```
 git log --pretty="format:%cd %s" --since="60 days ago" --date="short" >> "gitoutput.txt"
 ```
-... which produces a log that like this:
+... which produces a log that looks like this:
 
 ```
 2021-12-01 0.13.6
@@ -93,7 +93,7 @@ Issue #3138: fix — thing three.
 Issue #3138: fix — thing one; fix — thing two; fix — thing three.
 ```
 
-### Repeated version references (status: 🔴)
+### Repeated version references (status: 🟢)
 
 **Input**: Handwritten version number commits lke ...
 ```
@@ -120,15 +120,13 @@ USAGE:
     timesheet [FLAGS] [OPTIONS]
 
 FLAGS:
-    -d, --dryrun     Sets up a dry-run, does not timesheet create output 🔴
     -h, --help       Prints help information
     -V, --version    Prints version information
-    -v, --verbose    Putput process information 🔴
+    -v, --verbose    Output process info during execution 🟡
 
 OPTIONS:
     -g <gitlogfile>            The git log input file [default: ./commits.txt] 🟢
     -m <macjournalfile>        The MacJournal input file [default: ./macjournal.txt] 🟢
-    -o <outfile>               Output file, stdout if not present 🔴
 ```
 
 ## For Example
