@@ -30,13 +30,9 @@ fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
             continue;
         }
 
-        // ignore commits containing "Ibid."
-        let dc: Option<(&str, &str)> = temp.split_once(" ");
-        if dc.is_some(){
-            let (_, m) = dc.unwrap();
-            if m.to_lowercase().starts_with("ibid.") {
-              continue;
-            }
+        // ignore commits starting with "Ibid."
+        if temp.to_ascii_lowercase().starts_with("ibid.") {
+            continue;
         }
 
         // ignore commits containing "typo"
@@ -53,7 +49,7 @@ fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
 }
 
 #[test]
-fn check_cleanraw() {
+fn check_cleanraw_git() {
     let mut t: Vec<String> = vec![];
     t.push("Fix typo".to_string());
     t.push("Fix whitespace".to_string());
@@ -65,6 +61,7 @@ fn check_cleanraw() {
     t.push(" this is beta".to_string());
     let o = cleanraw(t);
 
+    println!("{:?}", o);
     assert_eq!(2, o.len());
     assert_eq!("this is alpha".to_string(), o.first().unwrap().to_string());
 }

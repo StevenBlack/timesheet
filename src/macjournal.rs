@@ -9,7 +9,8 @@ pub fn process(settings: &Opt) -> Vec<String> {
     let mut rawvec: Vec<String> = raw.lines().map(|l| l.trim().to_string()).collect();
 
     // remove the "Topic: ..." elements
-    rawvec.retain(|x| &x.len() < &6 || &x[0..6] != "Topic:");
+    rawvec.retain(|x| &x.len() > &2);
+    rawvec.retain(|x| &x[0..6] != "Topic:");
 
     let mut cleanvec: Vec<String> = cleanraw(rawvec);
     // we need to normalize the listing
@@ -62,7 +63,7 @@ pub fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
 }
 
 #[test]
-fn check_cleanraw() {
+fn check_cleanraw_macjournal() {
     let mut t: Vec<String> = vec![];
     t.push(" this is alpha ".to_string());
     t.push("".to_string());
@@ -76,9 +77,9 @@ fn check_cleanraw() {
 
 pub fn cleanrawdate(datestring: String) -> String {
     let strvec:Vec<_> =datestring.split_ascii_whitespace().collect();
-    let day = format!("{:0>2}", strvec[1]);
+    let day = format!("{:0>2}", strvec[2].replace(&[','][..], ""));
     let year = strvec[3];
-    let monthstr = match strvec[2] {
+    let monthstr = match strvec[1] {
         "January" => "01",
         "February" => "02",
         "March" => "03",
