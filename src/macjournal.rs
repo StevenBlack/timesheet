@@ -77,9 +77,9 @@ fn check_cleanraw_macjournal() {
 
 pub fn cleanrawdate(datestring: String) -> String {
     let strvec:Vec<_> =datestring.split_ascii_whitespace().collect();
-    let day = format!("{:0>2}", strvec[2].replace(&[','][..], ""));
+    let day = format!("{:0>2}", strvec[1].replace(&[','][..], ""));
     let year = strvec[3];
-    let monthstr = match strvec[1] {
+    let monthstr = match strvec[2] {
         "January" => "01",
         "February" => "02",
         "March" => "03",
