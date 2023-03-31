@@ -113,7 +113,7 @@ Issue #3138: Something version 0.3.11, 0.3.12, and 0.3.13 built, tested, and rol
 ```
 $ timesheet -h
 
-timesheet 0.1.0
+timesheet 0.3.0
 Timesheet from git log output and MaJournal export data.
 
 USAGE:
@@ -122,11 +122,12 @@ USAGE:
 FLAGS:
     -h, --help       Prints help information
     -V, --version    Prints version information
-    -v, --verbose    Output process info during execution 🟡
+    -v, --verbose    Output process information
 
 OPTIONS:
-    -g <gitlogfile>            The git log input file [default: ./commits.txt] 🟢
-    -m <macjournalfile>        The MacJournal input file [default: ./macjournal.txt] 🟢
+    -g <gitlogfile>            The git log input file [default: ./commits.txt]
+    -m <macjournalfile>        The MacJournal input file [default: ./macjournal.txt]
+
 ```
 
 ## For Example
