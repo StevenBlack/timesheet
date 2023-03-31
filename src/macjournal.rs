@@ -76,7 +76,7 @@ fn check_cleanraw_macjournal() {
 }
 
 pub fn cleanrawdate(datestring: String) -> String {
-    let strvec:Vec<_> =datestring.split_ascii_whitespace().collect();
+    let strvec:Vec<_> = datestring.split_ascii_whitespace().collect();
     let day = format!("{:0>2}", strvec[1].replace(&[','][..], ""));
     let year = strvec[3];
     let monthstr = match strvec[2] {
@@ -102,4 +102,16 @@ pub fn cleanrawdate(datestring: String) -> String {
 fn check_cleanrawdate() {
     let teststring = "Date: 15 November 2021 at 12:15".to_string();
     assert_eq!(cleanrawdate(teststring), "2021-11-15".to_string())
+}
+
+#[test]
+fn check_cleanrawdate1() {
+    let teststring = "Date: 5 November 2022 at 12:15".to_string();
+    assert_eq!(cleanrawdate(teststring), "2022-11-05".to_string())
+}
+
+#[test]
+fn check_cleanrawdate2() {
+    let teststring = "Date:  5    November    2022 at 12:15".to_string();
+    assert_eq!(cleanrawdate(teststring), "2022-11-05".to_string())
 }
