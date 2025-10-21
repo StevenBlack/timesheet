@@ -9,7 +9,7 @@ pub fn process(settings: &Opt) -> Vec<String> {
     let mut rawvec: Vec<String> = raw.lines().map(|l| l.trim().to_string()).collect();
 
     // remove the "Topic: ..." elements
-    rawvec.retain(|x| &x.len() > &2);
+    rawvec.retain(|x| &x.len() > &7);
     rawvec.retain(|x| &x[0..6] != "Topic:");
 
     let mut cleanvec: Vec<String> = cleanraw(rawvec);
@@ -77,9 +77,9 @@ fn check_cleanraw_macjournal() {
 
 pub fn cleanrawdate(datestring: String) -> String {
     let strvec:Vec<_> = datestring.split_ascii_whitespace().collect();
-    let day = format!("{:0>2}", strvec[1].replace(&[','][..], ""));
+    let day = format!("{:0>2}", strvec[2].replace(&[','][..], ""));
     let year = strvec[3];
-    let monthstr = match strvec[2] {
+    let monthstr = match strvec[1] {
         "January" => "01",
         "February" => "02",
         "March" => "03",
@@ -100,18 +100,18 @@ pub fn cleanrawdate(datestring: String) -> String {
 
 #[test]
 fn check_cleanrawdate() {
-    let teststring = "Date: 15 November 2021 at 12:15".to_string();
-    assert_eq!(cleanrawdate(teststring), "2021-11-15".to_string())
+    let teststring = "Date: October 20, 2025 at 12:02".to_string();
+    assert_eq!(cleanrawdate(teststring), "2025-10-20".to_string())
 }
 
 #[test]
 fn check_cleanrawdate1() {
-    let teststring = "Date: 5 November 2022 at 12:15".to_string();
+    let teststring = "Date: November  5,  2022 at 12:15".to_string();
     assert_eq!(cleanrawdate(teststring), "2022-11-05".to_string())
 }
 
 #[test]
 fn check_cleanrawdate2() {
-    let teststring = "Date:  5    November    2022 at 12:15".to_string();
+    let teststring = "Date:   November  5,   2022 at 12:15".to_string();
     assert_eq!(cleanrawdate(teststring), "2022-11-05".to_string())
 }
