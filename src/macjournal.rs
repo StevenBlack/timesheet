@@ -1,4 +1,4 @@
-use crate::{Opt};
+use crate::Opt;
 use regex::Regex;
 
 pub fn process(settings: &Opt) -> Vec<String> {
@@ -21,7 +21,7 @@ pub fn process(settings: &Opt) -> Vec<String> {
 }
 
 fn dateprefix(unvec: Vec<String>) -> Vec<String> {
-    let mut retvec: Vec<String> =vec![];
+    let mut retvec: Vec<String> = vec![];
     let mut dt: String = String::from(" ");
     for line in unvec {
         if isyyyymmdddate(line.clone()) {
@@ -33,7 +33,7 @@ fn dateprefix(unvec: Vec<String>) -> Vec<String> {
     retvec
 }
 
-fn isyyyymmdddate(lin:String) -> bool {
+fn isyyyymmdddate(lin: String) -> bool {
     let re = Regex::new(r"^\d{4}-\d{2}-\d{2}$").unwrap();
     re.is_match(lin.as_str())
 }
@@ -74,7 +74,7 @@ fn check_cleanraw_macjournal() {
 }
 
 pub fn cleanrawdate(datestring: String) -> String {
-    let strvec:Vec<_> = datestring.split_ascii_whitespace().collect();
+    let strvec: Vec<_> = datestring.split_ascii_whitespace().collect();
     let day = format!("{:0>2}", strvec[2].replace(&[','][..], ""));
     let year = strvec[3];
     let monthstr = match strvec[1] {
@@ -90,7 +90,7 @@ pub fn cleanrawdate(datestring: String) -> String {
         "October" => "10",
         "November" => "11",
         "December" => "12",
-        _ => "00"
+        _ => "00",
     };
     let month = monthstr.to_string();
     format!("{}-{}-{}", year, month, day).to_string()

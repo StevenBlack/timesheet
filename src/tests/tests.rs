@@ -24,7 +24,7 @@ mod tests {
     #[test]
     fn convert_strin_to_vec() {
         let my_string = common::file_to_string("input2.txt".to_string());
-        let my_vec= common::string_to_vec(my_string);
+        let my_vec = common::string_to_vec(my_string);
         assert!(my_vec.len() > 0);
     }
 
@@ -51,13 +51,15 @@ mod tests {
 
     #[test]
     fn input_readable_by_file_to_vec_of_char_vec() {
-        let my_vec = common::file_to_vec_of_char_vec("/Users/steve/Dropbox/commits.txt".to_string());
+        let my_vec =
+            common::file_to_vec_of_char_vec("/Users/steve/Dropbox/commits.txt".to_string());
         assert!(my_vec.len() > 0);
     }
 
     #[test]
     fn input_readable_by_file_to_vec_of_words_vec() {
-        let my_vec = common::file_to_vec_of_words_vec("/Users/steve/Dropbox/commits.txt".to_string());
+        let my_vec =
+            common::file_to_vec_of_words_vec("/Users/steve/Dropbox/commits.txt".to_string());
         assert!(my_vec.len() > 0);
     }
 

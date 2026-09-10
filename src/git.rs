@@ -1,6 +1,6 @@
-use crate::{Opt};
+use crate::Opt;
 
-pub fn process(settings: &Opt)  -> Vec<String> {
+pub fn process(settings: &Opt) -> Vec<String> {
     // load raw data
     let raw = std::fs::read_to_string(&settings.gitlogfile).unwrap();
 
@@ -25,7 +25,11 @@ fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
         }
 
         // ignore commits containing "whitespace"
-        if temp.to_ascii_lowercase().replace(" ", "").contains("whitespace") {
+        if temp
+            .to_ascii_lowercase()
+            .replace(" ", "")
+            .contains("whitespace")
+        {
             continue;
         }
 

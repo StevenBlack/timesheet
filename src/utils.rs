@@ -2,18 +2,19 @@
 /// This module contains helpful utilities I've collected along the way.
 #[allow(dead_code)]
 pub mod common {
-    use std::io::BufReader;
-    use std::io::BufRead;
-    use std::io;
     use std::fs;
-    use std::io::prelude::*;
     use std::fs::File;
+    use std::io;
+    use std::io::prelude::*;
+    use std::io::BufRead;
+    use std::io::BufReader;
 
     /// read a file to string.
     pub fn file_to_string(filename: String) -> String {
         let mut file = File::open(filename).expect("Unable to open the file");
         let mut contents = String::new();
-        file.read_to_string(&mut contents).expect("Unable to read the file");
+        file.read_to_string(&mut contents)
+            .expect("Unable to read the file");
         contents
     }
 
@@ -55,7 +56,10 @@ pub mod common {
             Ok(file) => file,
             Err(error) => panic!("Problem opening the file: {:?}", error),
         };
-        let vecvec :Vec<Vec<String>> = readvec.iter().map(|l| l.split_whitespace().map(|l| l.to_string()).collect()).collect();
+        let vecvec: Vec<Vec<String>> = readvec
+            .iter()
+            .map(|l| l.split_whitespace().map(|l| l.to_string()).collect())
+            .collect();
         vecvec
     }
 
@@ -78,14 +82,14 @@ mod tests {
 
     #[test]
     fn test_commas_and() {
-        let mut a = vec!();
+        let mut a = vec![];
         a.push("Apples".to_string());
         assert_eq!(commas_and(a), "Apples".to_string());
-        a = vec!();
+        a = vec![];
         a.push("Apples".to_string());
         a.push("oranges".to_string());
         assert_eq!(commas_and(a), "Apples and oranges".to_string());
-        a = vec!();
+        a = vec![];
         a.push("Apples".to_string());
         a.push("oranges".to_string());
         a.push("bananas".to_string());

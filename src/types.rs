@@ -1,11 +1,11 @@
 // types.rs
-use std::{fmt};
-use regex::Regex;
 use lazy_static::lazy_static;
+use regex::Regex;
+use std::fmt;
 #[derive(Default, Clone, Debug)]
 pub struct Commit {
-    pub date:String,
-    pub msg:String,
+    pub date: String,
+    pub msg: String,
 }
 
 lazy_static! {
@@ -29,7 +29,7 @@ impl Commitinfo for Commit {
 fn check_msg_words() {
     let c = Commit {
         date: "2021-10-15".to_string(),
-        msg: "One two three.".to_string()
+        msg: "One two three.".to_string(),
     };
     assert_eq!(3, c.msg_words());
 }
@@ -79,7 +79,7 @@ pub type Commits = Vec<Commit>;
 fn check_semvertag() {
     let c = Commit {
         date: "2021-10-15".to_string(),
-        msg: "0.11.2".to_string()
+        msg: "0.11.2".to_string(),
     };
     assert_eq!(true, c.issemvertag());
 }
@@ -88,7 +88,7 @@ fn check_semvertag() {
 fn check_not_semvertag() {
     let c = Commit {
         date: "2021-10-15".to_string(),
-        msg: "some text".to_string()
+        msg: "some text".to_string(),
     };
     assert_eq!(false, c.issemvertag());
 }
