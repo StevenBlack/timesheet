@@ -1,7 +1,6 @@
 /// Steven Black's rust utils
 /// This module contains helpful utilities I've collected along the way.
 #[allow(dead_code)]
-
 pub mod common {
     use std::io::BufReader;
     use std::io::BufRead;
@@ -34,7 +33,7 @@ pub mod common {
         }
         let file_in = File::open(filename)?;
         let file_reader = BufReader::new(file_in);
-        Ok(file_reader.lines().filter_map(io::Result::ok).collect())
+        Ok(file_reader.lines().map_while(Result::ok).collect())
     }
 
     /// read a file into Vec<Vec<char>>.

@@ -52,9 +52,9 @@ fn main()  {
     };
 
     let mut fname: String = "".to_string();
-    
-    let settings: Opt = if config_file.is_some() {
-        fname = config_file.unwrap().to_str().unwrap_or("").to_string();
+
+    let settings: Opt = if let Some(config_file) = config_file {
+        fname = config_file.to_str().unwrap_or("").to_string();
         let toml_str = file_to_string(fname.clone());
         Opt::from_args_with_toml(&toml_str).expect("toml parse failed")
     } else {

@@ -41,7 +41,6 @@ fn isyyyymmdddate(lin:String) -> bool {
 pub fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
     // cleaning the vec
     let mut returnvec: Vec<String> = vec![];
-    let mut i = 0;
     for l in rawvec {
         let mut temp = l.trim().replace("  ", " ");
 
@@ -57,7 +56,6 @@ pub fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
         if !temp.is_empty() {
             returnvec.push(temp.to_string());
         }
-        i += 1;
     }
     returnvec
 }
