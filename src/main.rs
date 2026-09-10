@@ -165,7 +165,7 @@ fn main()  {
 fn issuecommits(commits: Commits) -> Commits {
     let (takes, mut other):(Vec<Commit>, Vec<Commit>) = commits
         .into_iter()
-        .partition(|x|(x.isissue()));
+        .partition(|x|x.isissue());
 
     if takes.len() == 0 {
         return other;
@@ -205,7 +205,7 @@ fn check_issuecommits() {
 fn semvercommits(commits: Commits) -> Commits {
     let (takes, mut other):(Vec<Commit>, Vec<Commit>) = commits
         .into_iter()
-        .partition(|x|(x.issemvertag()));
+        .partition(|x|x.issemvertag());
 
     if takes.len() == 0 {
         return other;
@@ -228,7 +228,7 @@ fn semvercommits(commits: Commits) -> Commits {
 fn versionsemvercommits(commits: Commits) -> Commits {
     let (takes, mut other):(Vec<Commit>, Vec<Commit>) = commits
         .into_iter()
-        .partition(|x|(x.isversionsemvertag() && x.msg_words() < 5));
+        .partition(|x|x.isversionsemvertag() && x.msg_words() < 5);
 
     if takes.len() == 0 {
         return other;
