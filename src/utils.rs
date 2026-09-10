@@ -32,7 +32,7 @@ pub mod common {
         if fs::metadata(filename.clone()).is_err() {
             panic!("Bad file {}", filename);
         }
-        let file_in = fs::File::open(filename)?;
+        let file_in = File::open(filename)?;
         let file_reader = BufReader::new(file_in);
         Ok(file_reader.lines().filter_map(io::Result::ok).collect())
     }

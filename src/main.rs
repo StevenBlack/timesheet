@@ -69,7 +69,7 @@ fn main()  {
 
     let mut gitvec: Vec<String> = vec![];
     // ckeck if the gitfile exists
-    if std::path::Path::new(&settings.gitlogfile).exists() {
+    if Path::new(&settings.gitlogfile).exists() {
         gitvec.extend(fromgit(&settings));
     } else if settings.verbose {
         println!(
@@ -80,7 +80,7 @@ fn main()  {
 
     let mut macjournalvec: Vec<String> = vec![];
     // ckeck if the gitfile exists
-    if std::path::Path::new(&settings.macjournalfile).exists() {
+    if Path::new(&settings.macjournalfile).exists() {
         macjournalvec.extend(frommacjournal(&settings));
     } else if settings.verbose {
         println!(
@@ -184,7 +184,7 @@ fn issuecommits(commits: Commits) -> Commits {
         };
         other.push(commit);
     }
-    return other;
+    other
 }
 
 #[test]
@@ -221,7 +221,7 @@ fn semvercommits(commits: Commits) -> Commits {
         msg: format!("{} {} built, tested, and rolled out.", v, commas_and(msgs)),
     };
     other.push(fixed);
-    return other;
+    other
 }
 
 /// Squash the version semver commits into a single vec element
@@ -249,7 +249,7 @@ fn versionsemvercommits(commits: Commits) -> Commits {
         };
         other.push(commit);
     }
-    return other;
+    other
 }
 
 #[test]
