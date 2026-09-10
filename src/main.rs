@@ -52,14 +52,14 @@ fn main()  {
     };
 
     let mut fname: String = "".to_string();
-    let settings: Opt;
-    if config_file.is_some() {
+    
+    let settings: Opt = if config_file.is_some() {
         fname = config_file.unwrap().to_str().unwrap_or("").to_string();
         let toml_str = file_to_string(fname.clone());
-        settings = Opt::from_args_with_toml(&toml_str).expect("toml parse failed");
+        Opt::from_args_with_toml(&toml_str).expect("toml parse failed")
     } else {
-        settings = Opt::from_args();
-    }
+        Opt::from_args()
+    };
 
     if settings.verbose {
       println!("Config file: {}", fname);
@@ -74,7 +74,7 @@ fn main()  {
     } else if settings.verbose {
         println!(
             "Git log file {:?} not found.",
-            &settings.gitlogfile.to_str()
+            settings.gitlogfile.to_str()
         );
     }
 
@@ -85,7 +85,7 @@ fn main()  {
     } else if settings.verbose {
         println!(
             "MacJournal file {:?} not found.",
-            &settings.macjournalfile.to_str());
+            settings.macjournalfile.to_str());
     }
 
     if settings.verbose {
@@ -114,7 +114,7 @@ fn main()  {
         let (date, msg) = commit.split_once(' ').unwrap();
         let commit = Commit{ date: date.to_string(), msg: msg.to_string() };
         if date != curdate {
-            if datevec.len() > 0 {
+            if !datevec.is_empty() {
                 datevecs.push(datevec);
             }
             curdate = date;
@@ -154,7 +154,7 @@ fn main()  {
         let mut out = day[0].date.to_owned();
         let xday = day.clone();
         for commit in xday {
-            out.push_str(" ");
+            out.push(' ');
             out.push_str(commit.msg.as_str());
         }
         println!("{}", out);
@@ -167,7 +167,7 @@ fn issuecommits(commits: Commits) -> Commits {
         .into_iter()
         .partition(|x|x.isissue());
 
-    if takes.len() == 0 {
+    if takes.is_empty() {
         return other;
     }
     let mut hashmap: HashMap<&str, Vec<&str>> = HashMap::new();
@@ -175,12 +175,12 @@ fn issuecommits(commits: Commits) -> Commits {
     for c in &takes {
         let (take, desc) = c.msg.split_once(':').unwrap();
         let trimmed = desc.trim_end_matches(".");
-        hashmap.entry(take).or_insert_with(Vec::new).push(trimmed);
+        hashmap.entry(take).or_default().push(trimmed);
     }
     for (key, value) in hashmap.iter() {
         let commit: Commit = Commit {
             date: date.to_owned(),
-            msg: format!("{}:{}.", key.to_string(), value.join(";").to_string()),
+            msg: format!("{}:{}.", key, value.join(";")),
         };
         other.push(commit);
     }
@@ -207,7 +207,7 @@ fn semvercommits(commits: Commits) -> Commits {
         .into_iter()
         .partition(|x|x.issemvertag());
 
-    if takes.len() == 0 {
+    if takes.is_empty() {
         return other;
     }
     let mut msgs: Vec<String> = vec![];
@@ -230,7 +230,7 @@ fn versionsemvercommits(commits: Commits) -> Commits {
         .into_iter()
         .partition(|x|x.isversionsemvertag() && x.msg_words() < 5);
 
-    if takes.len() == 0 {
+    if takes.is_empty() {
         return other;
     }
     let mut hashmap: HashMap<String, Vec<String>> = HashMap::new();
@@ -239,13 +239,13 @@ fn versionsemvercommits(commits: Commits) -> Commits {
         let (take, rest) = c.msg.split_once(' ').unwrap();
         let (_, desc) = rest.split_once(' ').unwrap();
         let trimmed = desc.trim_end_matches(".");
-        hashmap.entry(take.to_string()).or_insert_with(Vec::new).push(trimmed.to_string());
+        hashmap.entry(take.to_string()).or_default().push(trimmed.to_string());
     }
     for (key, msgs) in hashmap.iter() {
         let v = if msgs.len() < 2 { "version" } else { "versions" };
         let commit: Commit = Commit {
             date: date.to_owned(),
-            msg: format!("{} {} {} built, tested, and rolled out.", key.to_string(), v, commas_and(msgs.clone())),
+            msg: format!("{} {} {} built, tested, and rolled out.", key, v, commas_and(msgs.clone())),
         };
         other.push(commit);
     }

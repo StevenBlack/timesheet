@@ -9,7 +9,7 @@ pub fn process(settings: &Opt) -> Vec<String> {
     let mut rawvec: Vec<String> = raw.lines().map(|l| l.trim().to_string()).collect();
 
     // remove the "Topic: ..." elements
-    rawvec.retain(|x| &x.len() > &7);
+    rawvec.retain(|x| x.len() > 7);
     rawvec.retain(|x| &x[0..6] != "Topic:");
 
     let mut cleanvec: Vec<String> = cleanraw(rawvec);
@@ -45,7 +45,7 @@ pub fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
     for l in rawvec {
         let mut temp = l.trim().replace("  ", " ");
 
-        if temp.len() == 0 {
+        if temp.is_empty() {
             continue;
         }
 
@@ -54,10 +54,10 @@ pub fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
             temp = cleanrawdate(temp);
         }
 
-        if temp.len() > 0 {
+        if !temp.is_empty() {
             returnvec.push(temp.to_string());
         }
-        i = i + 1;
+        i += 1;
     }
     returnvec
 }

@@ -21,7 +21,7 @@ fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
     for l in rawvec {
         let temp = l.trim().replace("  ", " ");
 
-        if temp.len() == 0 {
+        if temp.is_empty() {
             continue;
         }
 
@@ -40,10 +40,10 @@ fn cleanraw(rawvec: Vec<String>) -> Vec<String> {
             continue;
         }
 
-        if temp.len() > 0 {
+        if !temp.is_empty() {
             returnvec.push(temp.to_string());
         }
-        i = i + 1;
+        i += 1;
     }
     returnvec
 }
