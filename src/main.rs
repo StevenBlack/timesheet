@@ -262,7 +262,7 @@ fn versionsemvercommits(commits: Commits) -> Commits {
     let date = &takes[0].date;
     for c in &takes {
         let (take, rest) = c.msg.split_once(' ').unwrap();
-        let (_, desc) = rest.split_once(' ').unwrap();
+        let (_, desc) = rest.split_once(' ').unwrap_or( ("",""));
         let trimmed = desc.trim_end_matches(".");
         hashmap
             .entry(take.to_string())
