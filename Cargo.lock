@@ -476,7 +476,7 @@ dependencies = [
 
 [[package]]
 name = "timesheet"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "lazy_static",
  "regex",
